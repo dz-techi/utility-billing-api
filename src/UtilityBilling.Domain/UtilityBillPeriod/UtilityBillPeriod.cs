@@ -1,3 +1,4 @@
+using UtilityBilling.Contracts.Common;
 using UtilityBilling.Contracts.Common.Enums;
 using UtilityBilling.Contracts.Common.UtilityUnitType;
 using UtilityBilling.Domain.Common;
@@ -5,20 +6,28 @@ using UtilityBilling.Domain.Exceptions;
 
 namespace UtilityBilling.Domain.UtilityBillPeriod;
 
-public class UtilityBillPeriodDto : BaseEntity
+public class UtilityBillPeriod : BaseEntity
 {
+    public string Name { get; set; } = null!;
+    
     public Guid UserId { get; set; }
 
-    public DateOnly MonthOfTheYear { get; set; }
+    public DateTime StartDate { get; set; }
+    
+    public DateTime EndDate { get; set; }
 
+    public BillPeriodStatus Status { get; set; }
+    
     public List<UtilityBill> UtilityBills { get; set; } = [];
 
-    public UtilityBillPeriodDto() {}
+    public UtilityBillPeriod() {}
     
-    public UtilityBillPeriodDto(Guid userId, DateOnly monthOfTheYear)
+    public UtilityBillPeriod(Guid userId, string name, DateTime startDate, DateTime endDate)
     {
         UserId = userId;
-        MonthOfTheYear = monthOfTheYear;
+        Name = name;
+        StartDate = startDate;
+        EndDate = endDate;
     }
 
     public void AddUtilityBill(UtilityBillType utilityBillType, decimal usage, decimal cost, MeasurementUnitType measurementUnitType)

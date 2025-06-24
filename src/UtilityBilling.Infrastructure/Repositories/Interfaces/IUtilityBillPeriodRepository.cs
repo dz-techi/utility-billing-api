@@ -2,9 +2,9 @@ using UtilityBilling.Domain.UtilityBillPeriod;
 
 namespace UtilityBilling.Infrastructure.Repositories.Interfaces;
 
-public interface IUtilityBillPeriodRepository : IBaseRepository<UtilityBillPeriodDto>
+public interface IUtilityBillPeriodRepository : IBaseRepository<UtilityBillPeriod>
 {
-    Task<UtilityBillPeriodDto?> GetByUserIdAndMonthOfTheYearAsync(Guid userId, DateOnly monthOfTheYear, CancellationToken cancellationToken);
+    Task<UtilityBillPeriod?> FindExistingBillPeriodWithinDatesAsync(Guid userId, DateTime startDate, DateTime endDate, CancellationToken cancellationToken);
     
-    Task<IList<UtilityBillPeriodDto>> GetAllByUserIdAsync(Guid userId, CancellationToken cancellationToken);
+    Task<IList<UtilityBillPeriod>> GetAllByUserIdAsync(Guid userId, CancellationToken cancellationToken);
 }

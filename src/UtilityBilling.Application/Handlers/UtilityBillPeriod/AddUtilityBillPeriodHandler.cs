@@ -26,17 +26,19 @@ public class AddUtilityBillPeriodHandler : IRequestHandler<AddUtilityBillPeriodC
         // Hardcoded user id.
         var userId = new Guid("99d5d2cf-93e1-4300-ac09-39849738d744");
         
-        var existingUtilityBillPeriod = await _utilityBillPeriodRepository
-            .GetByUserIdAndMonthOfTheYearAsync(userId, request.MonthOfTheYear, cancellationToken);
+        var existingBillPeriod = await _utilityBillPeriodRepository
+            .FindExistingBillPeriodWithinDatesAsync(userId, request.StartDate, request.EndDate, cancellationToken);
 
-        if (existingUtilityBillPeriod != null)
+        if (existingBillPeriod != null)
         {
-            throw new EntityAlreadyExistsException($"Billing period for month of the year: {request.MonthOfTheYear} already exists");
+            throw new EntityAlreadyExistsException($"Billing period between dates: {request.StartDate} - {request.EndDate} already exists");
         }
 
-        var utilityBillPeriodDto = new UtilityBillPeriodDto(userId, request.MonthOfTheYear);
+        var utilityBillPeriodDto = new Domain.UtilityBillPeriod.UtilityBillPeriod(userId, request.Name, request.StartDate, request.EndDate);
 
         await _utilityBillPeriodRepository.AddAsync(utilityBillPeriodDto, cancellationToken);
+        
+        await _utilityBillPeriodRepository.SaveChangesAsync(cancellationToken);
         
         return _mapper.Map<GetUtilityBillPeriodResult>(utilityBillPeriodDto);
     }

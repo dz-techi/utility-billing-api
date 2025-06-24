@@ -8,11 +8,11 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="MongoDB.Driver" Version="3.1.0" />
+      <ProjectReference Include="..\UtilityBilling.Contracts\UtilityBilling.Contracts.csproj" />
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\UtilityBilling.Contracts\UtilityBilling.Contracts.csproj" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.3" />
     </ItemGroup>
 
 </Project>

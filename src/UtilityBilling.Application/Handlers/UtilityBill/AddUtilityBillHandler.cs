@@ -33,7 +33,7 @@ public class AddUtilityBillHandler : IRequestHandler<AddUtilityBillCommand, GetU
         
         utilityBillPeriod.AddUtilityBill(utilityBill.UtilityBillType, utilityBill.Usage, utilityBill.Cost, utilityBill.MeasurementUnitType);
 
-        await _utilityBillPeriodRepository.UpsertAsync(utilityBillPeriod, cancellationToken);
+        await _utilityBillPeriodRepository.AddAsync(utilityBillPeriod, cancellationToken);
         
         return _mapper.Map<GetUtilityBillPeriodResult>(utilityBillPeriod);
     }

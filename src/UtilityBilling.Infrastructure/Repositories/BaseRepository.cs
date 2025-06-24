@@ -1,28 +1,24 @@
+using Microsoft.EntityFrameworkCore;
 using UtilityBilling.Domain.Common;
 using UtilityBilling.Infrastructure.Database;
 using UtilityBilling.Infrastructure.Repositories.Interfaces;
-using MongoDB.Driver;
 
 namespace UtilityBilling.Infrastructure.Repositories;
 
 public abstract class BaseRepository<T> : IBaseRepository<T> where T : BaseEntity
 {
-    private IAppDbContext AppDbContext { get; }
+    protected readonly AppDbContext _context;
+    protected readonly DbSet<T> _dbSet;
 
-    protected IMongoCollection<T> Collection => AppDbContext.GetCollection<T>(CollectionName);
-
-    protected abstract string CollectionName { get; }    
-    
-    protected BaseRepository(IAppDbContext appDbContext)
+    protected BaseRepository(AppDbContext appDbContext)
     {
-        AppDbContext = appDbContext;
+        _context = appDbContext;
+        _dbSet = _context.Set<T>();
     }
 
     public async Task<T?> GetByIdAsync(Guid id, CancellationToken cancellationToken)
     {
-        var filter = Builders<T>.Filter.Eq(e => e.Id, id);
-
-        return await Collection.Find(filter).SingleOrDefaultAsync(cancellationToken);
+        return await _dbSet.FindAsync(id, cancellationToken);
     }
 
     public async Task<T> AddAsync(T entityDto, CancellationToken cancellationToken)
@@ -32,30 +28,33 @@ public abstract class BaseRepository<T> : IBaseRepository<T> where T : BaseEntit
             entityDto.Id = Guid.NewGuid();
         }
         
+        /*
         entityDto.CreatedDate = DateTime.UtcNow;
+        */
         
-        await Collection.InsertOneAsync(entityDto, cancellationToken: cancellationToken);
+        await _dbSet.AddAsync(entityDto, cancellationToken);
 
         return entityDto;
     }
 
-    public async Task<T> UpsertAsync(T entityDto, CancellationToken cancellationToken)
+    public void Update(T entityDto)
     {
-        await Collection.ReplaceOneAsync(
-            Builders<T>.Filter.Eq(e => e.Id, entityDto.Id),
-            entityDto,
-            new ReplaceOptions { IsUpsert = true },
-            cancellationToken);
-
-        return entityDto;
+        /*entityDto.UpdatedDate = DateTime.UtcNow;*/
+        
+        _dbSet.Update(entityDto);
     }
     
-    public async Task<bool> RemoveAsync(Guid id, CancellationToken cancellationToken)
+    public async Task<bool> RemoveAsync(T entity, CancellationToken cancellationToken)
     {
-        var filter = Builders<T>.Filter.Eq(e => e.Id, id);
+        _dbSet.Remove(entity);
+        
+        await _context.SaveChangesAsync(cancellationToken);
 
-        var result = await Collection.DeleteOneAsync(filter, cancellationToken);
+        return true;
+    }
 
-        return result.DeletedCount > 0;
+    public Task SaveChangesAsync(CancellationToken cancellationToken)
+    {
+        return _context.SaveChangesAsync(cancellationToken);
     }
 }

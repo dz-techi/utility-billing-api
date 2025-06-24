@@ -23,6 +23,6 @@ public class RemoveUtilityBillPeriodHandler : IRequestHandler<RemoveUtilityBillP
             throw new EntityNotFoundException($"Utility bill period with id: {request.UtilityBillPeriodId} not found");
         }
         
-        return await _utilityBillPeriodRepository.RemoveAsync(request.UtilityBillPeriodId, cancellationToken);
+        return await _utilityBillPeriodRepository.RemoveAsync(utilityBillPeriod, cancellationToken);
     }
 }

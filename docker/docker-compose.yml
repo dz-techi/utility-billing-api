@@ -16,9 +16,20 @@ services:
       - 18889:18889
     networks:
       - open
+        
+  postgres:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: example
+      POSTGRES_USER: postgres    # Ensure that this is set to 'postgres'
+      POSTGRES_DB: postgres      # Specify the default database, 'postgres' or custom
+    ports:
+      - "5432:5432"
   
 volumes:
   dbdata6:
+  pgdata:
     
 networks:
   open:

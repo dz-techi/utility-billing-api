@@ -1,12 +1,12 @@
+using UtilityBilling.Contracts.Common;
 using UtilityBilling.Contracts.Common.Enums;
 using UtilityBilling.Contracts.Common.UtilityUnitType;
+using UtilityBilling.Domain.Common;
 
 namespace UtilityBilling.Domain.UtilityBillPeriod;
 
-public class UtilityBill
+public class UtilityBill : BaseEntity
 {
-    public Guid Id { get; set; }
-    
     public UtilityBillType UtilityBillType { get; set; }
 
     public decimal Usage { get; set; }
@@ -14,15 +14,17 @@ public class UtilityBill
     public decimal Cost { get; set; }
 
     public MeasurementUnitType MeasurementUnitType { get; set; }
-
+    
+    public Guid UtilityBillPeriodId { get; set; }
+    
+    public UtilityBillPeriod UtilityBillPeriod { get; set; }
+    
     public UtilityBill()
     {
-        Id = Guid.NewGuid();
     }
     
     public UtilityBill(UtilityBillType utilityBillType, decimal usage, decimal cost, MeasurementUnitType measurementUnitType)
     {
-        Id = Guid.NewGuid();
         UtilityBillType = utilityBillType;
         Usage = usage;
         Cost = cost;

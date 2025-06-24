@@ -1,4 +1,4 @@
-using UtilityBilling.Application.Queries.Product;
+/*using UtilityBilling.Application.Queries.Product;
 using UtilityBilling.Contracts.Results.Product;
 using UtilityBilling.Infrastructure.Repositories.Interfaces;
 using MapsterMapper;
@@ -29,4 +29,4 @@ public class GetProductHandler : IRequestHandler<GetProductQuery, GetProductResu
 
         return _mapper.Map<GetProductResult>(productDto);
     }
-}
+}*/

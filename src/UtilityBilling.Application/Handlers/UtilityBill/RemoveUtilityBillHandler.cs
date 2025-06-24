@@ -37,7 +37,9 @@ public class RemoveUtilityBillHandler : IRequestHandler<RemoveUtilityBillCommand
 
         utilityBillPeriod.RemoveUtilityBill(utilityBill.Id);
         
+        /*
         await _utilityBillPeriodRepository.UpsertAsync(utilityBillPeriod, cancellationToken);
+        */
 
         return true;
     }

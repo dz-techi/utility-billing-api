@@ -1,11 +1,12 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Microsoft.EntityFrameworkCore;
 using OpenTelemetry.Logs;
 using OpenTelemetry.Resources;
 using UtilityBilling.Api;
 using UtilityBilling.Application;
 using UtilityBilling.Infrastructure;
-using UtilityBilling.Api.Extensions;
+using UtilityBilling.Infrastructure.Database;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,7 +17,7 @@ builder.Services.AddSwaggerGen();
 builder.Services
     .AddApi(builder.Configuration)
     .AddApplication()
-    .AddInfrastructure();
+    .AddInfrastructure(builder.Configuration);
 
 builder.Logging.AddOpenTelemetry(options =>
 {
@@ -44,7 +45,16 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.SeedData();
+// Apply migrations and seed data (if needed)
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    var context = services.GetRequiredService<AppDbContext>();
+
+    context.Database.Migrate(); // Applies migrations
+
+    // You can seed data here if needed
+}
 
 app.UseAuthentication();
 app.UseAuthorization();
@@ -52,7 +62,7 @@ app.UseAuthorization();
 app.UseCors(builder =>
 {
     builder
-        .WithOrigins("http://localhost:3000")
+        .WithOrigins("http://localhost:5173")
         .AllowAnyHeader()
         .AllowAnyMethod();
 });

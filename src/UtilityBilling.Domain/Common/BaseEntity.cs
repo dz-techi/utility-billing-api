@@ -1,19 +1,19 @@
-using MongoDB.Bson.Serialization.Attributes;
+using System.ComponentModel.DataAnnotations;
 
 namespace UtilityBilling.Domain.Common;
 
 public abstract class BaseEntity
 {
-    [BsonId]
+    [Key]
     public Guid Id { get; set; }
 
-    public DateTime CreatedDate { get; set; }
+    /*public DateTime CreatedDate { get; set; }
     
-    public DateTime UpdatedDate { get; set; }
+    public DateTime UpdatedDate { get; set; }*/
 
-    protected BaseEntity()
+    /*protected BaseEntity()
     {
         CreatedDate = DateTime.UtcNow;
         UpdatedDate = DateTime.UtcNow;
-    }
+    }*/
 }

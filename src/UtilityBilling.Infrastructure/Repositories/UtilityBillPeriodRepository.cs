@@ -1,43 +1,36 @@
-using MongoDB.Driver;
+using Microsoft.EntityFrameworkCore;
 using UtilityBilling.Domain.UtilityBillPeriod;
-using UtilityBilling.Infrastructure.Constants;
 using UtilityBilling.Infrastructure.Database;
 using UtilityBilling.Infrastructure.Repositories.Interfaces;
 
 namespace UtilityBilling.Infrastructure.Repositories;
 
-public class UtilityBillPeriodRepository : BaseRepository<UtilityBillPeriodDto>, IUtilityBillPeriodRepository
+public class UtilityBillPeriodRepository : BaseRepository<UtilityBillPeriod>, IUtilityBillPeriodRepository
 {
-    protected override string CollectionName => Collections.UtilityBillPeriods;
     
-    public UtilityBillPeriodRepository(IAppDbContext appDbContext) : base(appDbContext)
+    public UtilityBillPeriodRepository(AppDbContext appDbContext) : base(appDbContext)
     {
     }
 
-    public async Task<UtilityBillPeriodDto?> GetByUserIdAndMonthOfTheYearAsync(
+    public async Task<UtilityBillPeriod?> FindExistingBillPeriodWithinDatesAsync(
         Guid userId, 
-        DateOnly monthOfTheYear,
+        DateTime startDate,
+        DateTime endDate,
         CancellationToken cancellationToken)
     {
-        var startOfMonth = new DateOnly(monthOfTheYear.Year, monthOfTheYear.Month, 1);
-        var endOfMonth = startOfMonth.AddMonths(1);
-
-        var filter = Builders<UtilityBillPeriodDto>.Filter.And(
-            Builders<UtilityBillPeriodDto>.Filter.Eq(u => u.UserId, userId),
-            Builders<UtilityBillPeriodDto>.Filter.Gte(u => u.MonthOfTheYear, startOfMonth),
-            Builders<UtilityBillPeriodDto>.Filter.Lt(u => u.MonthOfTheYear, endOfMonth));
-        
-        return await Collection.Find(filter).SingleOrDefaultAsync(cancellationToken);
+        return await _context.UtilityBillPeriods
+            .Where(u => u.UserId == userId)
+            .Where(u => (u.StartDate <= startDate && u.EndDate >= startDate) || (u.StartDate <= endDate && u.EndDate >= endDate))
+            .SingleOrDefaultAsync(cancellationToken);
     }
     
-    public async Task<IList<UtilityBillPeriodDto>> GetAllByUserIdAsync(
+    public async Task<IList<UtilityBillPeriod>> GetAllByUserIdAsync(
         Guid userId, 
         CancellationToken cancellationToken)
     {
-        var filter = Builders<UtilityBillPeriodDto>.Filter.Eq(u => u.UserId, userId);
-
-        var sortDefinition = Builders<UtilityBillPeriodDto>.Sort.Ascending(u => u.MonthOfTheYear);
-
-        return await Collection.Find(filter).Sort(sortDefinition).ToListAsync(cancellationToken);
+        return await _context.UtilityBillPeriods.AsNoTracking()
+            .Where(u => u.UserId == userId)
+            .OrderBy(u => u.StartDate)
+            .ToListAsync(cancellationToken);
     }
 }

@@ -30,15 +30,12 @@ public class DataSeedingService : IDataSeedingService
         var billPeriod2Id = new Guid("377f8986-3f3b-4724-ae42-6fc26f4d5c89");
         var billPeriod3Id = new Guid("1b9e94cb-0745-4be6-bbc5-a051f877a740");
         
-        var utilityBillPeriods = new List<UtilityBillPeriodDto>
+        var utilityBillPeriods = new List<UtilityBillPeriod>
         {
             new()
             {
                 Id = billPeriod1Id,
                 UserId = user1Id,
-                CreatedDate = new DateTime(2024, 1, 5),
-                UpdatedDate = new DateTime(2024, 1, 6),
-                MonthOfTheYear = new DateOnly(2024, 1, 1),
                 UtilityBills =
                 [
                     new UtilityBill
@@ -68,9 +65,6 @@ public class DataSeedingService : IDataSeedingService
             {
                 Id = billPeriod2Id,
                 UserId = user1Id,
-                CreatedDate = new DateTime(2024, 2, 4),
-                UpdatedDate = new DateTime(2024, 2, 6),
-                MonthOfTheYear = new DateOnly(2024, 2, 1),
                 UtilityBills =
                 [
                     new UtilityBill
@@ -100,9 +94,6 @@ public class DataSeedingService : IDataSeedingService
             {
                 Id = billPeriod3Id,
                 UserId = user2Id,
-                CreatedDate = new DateTime(2024, 1, 4),
-                UpdatedDate = new DateTime(2024, 1, 6),
-                MonthOfTheYear = new DateOnly(2024, 1, 1),
                 UtilityBills =
                 [
                     new UtilityBill
@@ -140,6 +131,7 @@ public class DataSeedingService : IDataSeedingService
             }
 
             await _utilityBillPeriodRepository.AddAsync(billPeriod, CancellationToken.None);
+            await _utilityBillPeriodRepository.SaveChangesAsync(CancellationToken.None);
         }
         
         _logger.LogInformation("Data seeding for Development completed");

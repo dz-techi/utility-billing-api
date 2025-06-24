@@ -38,7 +38,8 @@ public class UpdateUtilityBillHandler : IRequestHandler<UpdateUtilityBillCommand
 
         utilityBill.Update(request.Usage, request.Cost);
         
-        await _utilityBillPeriodRepository.UpsertAsync(utilityBillPeriod, cancellationToken);
+        _utilityBillPeriodRepository.Update(utilityBillPeriod);
+        await _utilityBillPeriodRepository.SaveChangesAsync(cancellationToken);
         
         return _mapper.Map<GetUtilityBillPeriodResult>(utilityBillPeriod);
     }

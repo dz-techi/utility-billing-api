@@ -39,7 +39,12 @@ public class UtilityBillPeriodController : BaseController
     [HttpPost]
     public async Task<ActionResult<GetUtilityBillPeriodResult>> AddUtilityBillPeriodAsync([FromBody] AddUtilityBillPeriodRequest request, CancellationToken cancellationToken)
     {
-        var addUtilityBillPeriodCommand = new AddUtilityBillPeriodCommand(request.MonthOfTheYear);
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(ModelState);
+        }
+        
+        var addUtilityBillPeriodCommand = new AddUtilityBillPeriodCommand(request.Name, request.StartDate, request.EndDate);
 
         var result = await _mediator.Send(addUtilityBillPeriodCommand, cancellationToken);
 

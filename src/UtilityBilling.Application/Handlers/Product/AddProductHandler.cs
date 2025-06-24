@@ -1,4 +1,4 @@
-using UtilityBilling.Application.Commands.Product;
+/*using UtilityBilling.Application.Commands.Product;
 using UtilityBilling.Contracts.Results.Product;
 using UtilityBilling.Domain.Models;
 using UtilityBilling.Infrastructure.Repositories.Interfaces;
@@ -45,4 +45,4 @@ public class AddProductHandler : IRequestHandler<AddProductCommand, GetProductRe
             return null;
         }
     }
-}
+}*/

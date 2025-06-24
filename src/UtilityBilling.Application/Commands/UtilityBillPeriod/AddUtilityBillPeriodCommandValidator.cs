@@ -6,8 +6,8 @@ public class AddUtilityBillPeriodCommandValidator : AbstractValidator<AddUtility
 {
     public AddUtilityBillPeriodCommandValidator()
     {
-        var tomorrow = DateOnly.FromDateTime(DateTime.UtcNow).AddDays(1);
-        
-        RuleFor(u => u.MonthOfTheYear).LessThan(tomorrow);
+        RuleFor(u => u.StartDate)
+            .LessThan(u => u.EndDate)
+            .WithMessage("Start date must be less than end date");
     }
 }
