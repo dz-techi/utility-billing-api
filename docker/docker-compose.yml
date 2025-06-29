@@ -1,13 +1,13 @@
 name: 'Local development'
 
 services:
-  mongodb:
-    image: mongo:6-jammy
-    ports:
-      - '27017:27017'
-    volumes:
-      - dbdata6:/data/db
-        
+  # mongodb:
+  #   image: mongo:6-jammy
+  #   ports:
+  #     - '27017:27017'
+  #   volumes:
+  #     - dbdata6:/data/db
+
   utility.billing.dashboard:
     image: mcr.microsoft.com/dotnet/aspire-dashboard:latest
     container_name: aspire-dashboard
@@ -16,20 +16,21 @@ services:
       - 18889:18889
     networks:
       - open
-        
+
   postgres:
     image: postgres
     restart: always
     environment:
       POSTGRES_PASSWORD: example
-      POSTGRES_USER: postgres    # Ensure that this is set to 'postgres'
-      POSTGRES_DB: postgres      # Specify the default database, 'postgres' or custom
+      POSTGRES_USER: postgres # Ensure that this is set to 'postgres'
+      POSTGRES_DB: postgres # Specify the default database, 'postgres' or custom
     ports:
       - "5432:5432"
-  
+
 volumes:
   dbdata6:
   pgdata:
-    
+
+
 networks:
   open:

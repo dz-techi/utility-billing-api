@@ -1,0 +1,17 @@
+{
+    "omnisharp.useModernNet": true,
+    "omnisharp.enableMsBuildLoadProjectsOnDemand": true,
+    "omnisharp.enableRoslynAnalyzers": true,
+    "editor.formatOnSave": true,
+    "dotnet.defaultSolution": "UtilityBilling.sln",
+    "csharp.debug.justMyCode": false,
+    "dotnet.formatting.organizeImportsOnFormat": true,
+    "omnisharp.enableEditorConfigSupport": true,
+    "csharp.debug.stopAtEntry": false,
+    "csharp.debug.requireExactSource": false,
+    "files.exclude": {
+        "**/bin": true,
+        "**/obj": true
+    },
+    "dotnet.completion.showCompletionItemsFromUnimportedNamespaces": true
+}

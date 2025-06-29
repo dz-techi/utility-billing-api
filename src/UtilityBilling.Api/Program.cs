@@ -4,11 +4,17 @@ using Microsoft.EntityFrameworkCore;
 using OpenTelemetry.Logs;
 using OpenTelemetry.Resources;
 using UtilityBilling.Api;
+using UtilityBilling.Api.Endpoints.Products;
+using UtilityBilling.Api.Endpoints.UtilityBillPeriods;
 using UtilityBilling.Application;
 using UtilityBilling.Infrastructure;
 using UtilityBilling.Infrastructure.Database;
 
 var builder = WebApplication.CreateBuilder(args);
+
+// Debug configuration loading
+var environment = builder.Environment.EnvironmentName;
+Console.WriteLine($"Current environment: {environment}");
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -23,18 +29,12 @@ builder.Logging.AddOpenTelemetry(options =>
 {
     options.AddConsoleExporter()
         .SetResourceBuilder(ResourceBuilder.CreateDefault().AddService("UtilityBilling.Api"));
-    
+
     options.AddOtlpExporter(opt =>
     {
         opt.Endpoint = new Uri("http://localhost:18889");
     });
 });
-
-builder.Services.AddControllers()
-    .AddJsonOptions(options =>
-    {
-        options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter(JsonNamingPolicy.SnakeCaseLower));
-    });
 
 var app = builder.Build();
 
@@ -50,27 +50,62 @@ using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
     var context = services.GetRequiredService<AppDbContext>();
+    var logger = services.GetRequiredService<ILogger<Program>>();
 
-    context.Database.Migrate(); // Applies migrations
+    try
+    {
+        logger.LogInformation("Starting database migration...");
 
-    // You can seed data here if needed
+        // Apply migrations
+        await context.Database.MigrateAsync();
+
+        logger.LogInformation("Database migration completed successfully.");
+    }
+    catch (Exception ex)
+    {
+        logger.LogError(ex, "An error occurred while migrating the database: {Message}", ex.Message);
+
+        // In development, you might want to throw to see the full error
+        if (app.Environment.IsDevelopment())
+        {
+            throw;
+        }
+    }
 }
 
 app.UseAuthentication();
-app.UseAuthorization();
 
 app.UseCors(builder =>
 {
     builder
-        .WithOrigins("http://localhost:5173")
+        .WithOrigins(
+            "http://localhost:3000",  // React default dev server
+            "http://localhost:5173",  // Vite dev server
+            "http://localhost:3001"   // Alternative React port
+        )
         .AllowAnyHeader()
-        .AllowAnyMethod();
+        .AllowAnyMethod()
+        .AllowCredentials();
 });
+
+app.UseAuthorization();
+
 
 // TODO: This ugly part will be removed when this issue is fixed: https://github.com/dotnet/aspnetcore/issues/51888
 app.UseExceptionHandler(_ => { });
 
 app.UseHttpsRedirection();
-app.MapControllers();
+
+// Map endpoints using Vertical Slice Architecture
+app.MapGetProductEndpoint();
+app.MapAddProductEndpoint();
+
+app.MapGetUtilityBillPeriodsEndpoint();
+app.MapAddUtilityBillPeriodEndpoint();
+app.MapGetUtilityBillPeriodByIdEndpoint();
+app.MapRemoveUtilityBillPeriodEndpoint();
+app.MapAddUtilityBillEndpoint();
+app.MapUpdateUtilityBillEndpoint();
+app.MapRemoveUtilityBillEndpoint();
 
 app.Run();

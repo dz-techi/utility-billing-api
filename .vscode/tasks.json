@@ -1,0 +1,28 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Build",
+            "command": "dotnet",
+            "args": [
+                "build",
+                "UtilityBilling.sln"
+            ],
+            "problemMatcher": [
+                "$msCompile"
+            ]
+        },
+        {
+            "label": "Run",
+            "command": "dotnet",
+            "args": [
+                "run",
+                "--project",
+                "src/UtilityBilling.Api/UtilityBilling.Api.csproj"
+            ],
+            "problemMatcher": [
+                "$msCompile"
+            ]
+        }
+    ]
+}
