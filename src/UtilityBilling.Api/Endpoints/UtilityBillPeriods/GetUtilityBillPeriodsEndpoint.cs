@@ -20,15 +20,6 @@ public static class GetUtilityBillPeriodsEndpoint
         [FromServices] ILogger<object> logger,
         CancellationToken cancellationToken)
     {
-        // TEST BREAKPOINT - PUT BREAKPOINT ON NEXT LINE
-        var test = "breakpoint test";
-
-        // DEBUG TEST - This should show in console
-        Console.WriteLine("=== DEBUG TEST - ENDPOINT CALLED ===");
-
-        logger.LogInformation("=== BREAKPOINT SHOULD HIT HERE ===");
-        logger.LogInformation("Getting utility bill periods.");
-
         // Hardcoded user id.
         var userId = new Guid("99d5d2cf-93e1-4300-ac09-39849738d744");
         logger.LogInformation("User ID: {UserId}", userId);

@@ -7,13 +7,13 @@ namespace UtilityBilling.Infrastructure.Repositories;
 
 public class UtilityBillPeriodRepository : BaseRepository<UtilityBillPeriod>, IUtilityBillPeriodRepository
 {
-    
+
     public UtilityBillPeriodRepository(AppDbContext appDbContext) : base(appDbContext)
     {
     }
 
     public async Task<UtilityBillPeriod?> FindExistingBillPeriodWithinDatesAsync(
-        Guid userId, 
+        Guid userId,
         DateTime startDate,
         DateTime endDate,
         CancellationToken cancellationToken)
@@ -23,14 +23,14 @@ public class UtilityBillPeriodRepository : BaseRepository<UtilityBillPeriod>, IU
             .Where(u => (u.StartDate <= startDate && u.EndDate >= startDate) || (u.StartDate <= endDate && u.EndDate >= endDate))
             .SingleOrDefaultAsync(cancellationToken);
     }
-    
+
     public async Task<IList<UtilityBillPeriod>> GetAllByUserIdAsync(
-        Guid userId, 
+        Guid userId,
         CancellationToken cancellationToken)
     {
         return await _context.UtilityBillPeriods.AsNoTracking()
             .Where(u => u.UserId == userId)
-            .OrderBy(u => u.StartDate)
+            .OrderByDescending(u => u.StartDate)
             .ToListAsync(cancellationToken);
     }
 }

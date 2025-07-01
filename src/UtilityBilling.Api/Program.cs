@@ -12,6 +12,12 @@ using UtilityBilling.Infrastructure.Database;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Configure JSON serialization to use string enums
+builder.Services.ConfigureHttpJsonOptions(options =>
+{
+    options.SerializerOptions.Converters.Add(new JsonStringEnumConverter(JsonNamingPolicy.CamelCase));
+});
+
 // Debug configuration loading
 var environment = builder.Environment.EnvironmentName;
 Console.WriteLine($"Current environment: {environment}");

@@ -7,11 +7,13 @@
             "request": "launch",
             "program": "${workspaceFolder}/src/UtilityBilling.Api/bin/Debug/net9.0/UtilityBilling.Api.dll",
             "cwd": "${workspaceFolder}/src/UtilityBilling.Api",
+            "preLaunchTask": "Build",
             "env": {
                 "ASPNETCORE_ENVIRONMENT": "Development",
                 "ASPNETCORE_URLS": "http://localhost:5299"
             },
-            "console": "integratedTerminal"
+            "console": "integratedTerminal",
+            "justMyCode": false
         }
     ]
 }
