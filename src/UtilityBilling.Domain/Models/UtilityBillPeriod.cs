@@ -4,19 +4,23 @@ using UtilityBilling.Contracts.Common.UtilityUnitType;
 using UtilityBilling.Domain.Common;
 using UtilityBilling.Domain.Exceptions;
 
-namespace UtilityBilling.Domain.UtilityBillPeriod;
+namespace UtilityBilling.Domain.Models;
 
 public class UtilityBillPeriod : BaseEntity
 {
     public string Name { get; set; } = null!;
     
     public Guid UserId { get; set; }
+    
+    public Guid PropertyId { get; set; }
 
     public DateTime StartDate { get; set; }
     
     public DateTime EndDate { get; set; }
 
     public BillPeriodStatus Status { get; set; }
+    
+    public Property Property { get; set; } = null!;
     
     public List<UtilityBill> UtilityBills { get; set; } = [];
 

@@ -1,9 +1,8 @@
-using UtilityBilling.Contracts.Common;
 using UtilityBilling.Contracts.Common.Enums;
 using UtilityBilling.Contracts.Common.UtilityUnitType;
 using UtilityBilling.Domain.Common;
 
-namespace UtilityBilling.Domain.UtilityBillPeriod;
+namespace UtilityBilling.Domain.Models;
 
 public class UtilityBill : BaseEntity
 {
