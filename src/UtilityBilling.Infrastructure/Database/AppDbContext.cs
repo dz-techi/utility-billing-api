@@ -48,8 +48,8 @@ public class AppDbContext : DbContext
                 Name = "January 2025",
                 UserId = user1Id,
                 Status = BillPeriodStatus.Closed,
-                StartDate = DateTime.SpecifyKind(new DateTime(2024, 1, 1), DateTimeKind.Utc),
-                EndDate = DateTime.SpecifyKind(new DateTime(2024, 1, 31), DateTimeKind.Utc)
+                StartDate = DateTime.SpecifyKind(new DateTime(2025, 1, 1), DateTimeKind.Utc),
+                EndDate = DateTime.SpecifyKind(new DateTime(2025, 1, 31), DateTimeKind.Utc)
             },
             new UtilityBillPeriod
             {
@@ -57,8 +57,8 @@ public class AppDbContext : DbContext
                 Name = "February 2025",
                 UserId = user1Id,
                 Status = BillPeriodStatus.Closed,
-                StartDate = DateTime.SpecifyKind(new DateTime(2024, 2, 1), DateTimeKind.Utc),
-                EndDate = DateTime.SpecifyKind(new DateTime(2024, 2, 28), DateTimeKind.Utc)
+                StartDate = DateTime.SpecifyKind(new DateTime(2025, 2, 1), DateTimeKind.Utc),
+                EndDate = DateTime.SpecifyKind(new DateTime(2025, 2, 28), DateTimeKind.Utc)
             },
             new UtilityBillPeriod
             {
@@ -66,8 +66,8 @@ public class AppDbContext : DbContext
                 Name = "March 2025",
                 UserId = user1Id,
                 Status = BillPeriodStatus.Active,
-                StartDate = DateTime.SpecifyKind(new DateTime(2024, 3, 1), DateTimeKind.Utc),
-                EndDate = DateTime.SpecifyKind(new DateTime(2024, 3, 31), DateTimeKind.Utc)
+                StartDate = DateTime.SpecifyKind(new DateTime(2025, 3, 1), DateTimeKind.Utc),
+                EndDate = DateTime.SpecifyKind(new DateTime(2025, 3, 31), DateTimeKind.Utc)
             },
             new UtilityBillPeriod
             {
@@ -75,8 +75,8 @@ public class AppDbContext : DbContext
                 Name = "April 2025",
                 UserId = user1Id,
                 Status = BillPeriodStatus.Upcoming,
-                StartDate = DateTime.SpecifyKind(new DateTime(2024, 4, 1), DateTimeKind.Utc),
-                EndDate = DateTime.SpecifyKind(new DateTime(2024, 4, 30), DateTimeKind.Utc)
+                StartDate = DateTime.SpecifyKind(new DateTime(2025, 4, 1), DateTimeKind.Utc),
+                EndDate = DateTime.SpecifyKind(new DateTime(2025, 4, 30), DateTimeKind.Utc)
             }
         );
 

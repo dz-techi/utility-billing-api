@@ -56,11 +56,11 @@ namespace UtilityBilling.Infrastructure.Migrations
                 columns: new[] { "Id", "EndDate", "Name", "StartDate", "Status", "UserId" },
                 values: new object[,]
                 {
-                    { new Guid("29a69221-03a7-41fe-9c10-4645a7db10e7"), new DateTime(2024, 4, 30, 0, 0, 0, 0, DateTimeKind.Utc), "April 2025", new DateTime(2024, 4, 1, 0, 0, 0, 0, DateTimeKind.Utc), 1, new Guid("99d5d2cf-93e1-4300-ac09-39849738d744") },
-                    { new Guid("60a42c2d-c5e9-4692-8746-dee5831a16e6"), new DateTime(2024, 1, 31, 0, 0, 0, 0, DateTimeKind.Utc), "January 2025", new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), 2, new Guid("99d5d2cf-93e1-4300-ac09-39849738d744") },
+                    { new Guid("29a69221-03a7-41fe-9c10-4645a7db10e7"), new DateTime(2025, 4, 30, 0, 0, 0, 0, DateTimeKind.Utc), "April 2025", new DateTime(2025, 4, 1, 0, 0, 0, 0, DateTimeKind.Utc), 1, new Guid("99d5d2cf-93e1-4300-ac09-39849738d744") },
+                    { new Guid("60a42c2d-c5e9-4692-8746-dee5831a16e6"), new DateTime(2025, 1, 31, 0, 0, 0, 0, DateTimeKind.Utc), "January 2025", new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), 2, new Guid("99d5d2cf-93e1-4300-ac09-39849738d744") },
                     { new Guid("813ae334-2637-4212-b0de-100cf7faa6ab"), new DateTime(2024, 12, 31, 0, 0, 0, 0, DateTimeKind.Utc), "December 2024", new DateTime(2024, 12, 1, 0, 0, 0, 0, DateTimeKind.Utc), 2, new Guid("99d5d2cf-93e1-4300-ac09-39849738d744") },
-                    { new Guid("a2b48d07-98bc-48fa-893b-290d3f068a39"), new DateTime(2024, 3, 31, 0, 0, 0, 0, DateTimeKind.Utc), "March 2025", new DateTime(2024, 3, 1, 0, 0, 0, 0, DateTimeKind.Utc), 0, new Guid("99d5d2cf-93e1-4300-ac09-39849738d744") },
-                    { new Guid("e3a31ffb-ff65-4fcd-a652-e241e372e757"), new DateTime(2024, 2, 28, 0, 0, 0, 0, DateTimeKind.Utc), "February 2025", new DateTime(2024, 2, 1, 0, 0, 0, 0, DateTimeKind.Utc), 2, new Guid("99d5d2cf-93e1-4300-ac09-39849738d744") }
+                    { new Guid("a2b48d07-98bc-48fa-893b-290d3f068a39"), new DateTime(2025, 3, 31, 0, 0, 0, 0, DateTimeKind.Utc), "March 2025", new DateTime(2025, 3, 1, 0, 0, 0, 0, DateTimeKind.Utc), 0, new Guid("99d5d2cf-93e1-4300-ac09-39849738d744") },
+                    { new Guid("e3a31ffb-ff65-4fcd-a652-e241e372e757"), new DateTime(2025, 2, 28, 0, 0, 0, 0, DateTimeKind.Utc), "February 2025", new DateTime(2025, 2, 1, 0, 0, 0, 0, DateTimeKind.Utc), 2, new Guid("99d5d2cf-93e1-4300-ac09-39849738d744") }
                 });
 
             migrationBuilder.InsertData(

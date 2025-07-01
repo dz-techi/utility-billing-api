@@ -13,3 +13,5 @@ src/UtilityBilling.Domain/obj
 src/UtilityBilling.Infrastructure/bin
 src/UtilityBilling.Infrastructure/obj
 /src/UtilityBilling.Api/Logs
+obj/..UtilityBilling.Infrastructure --startup-project.EntityFrameworkCore.targets
+UtilityBilling.sln.DotSettings.user

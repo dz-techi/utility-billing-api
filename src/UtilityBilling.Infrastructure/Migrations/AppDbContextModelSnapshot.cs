@@ -118,36 +118,36 @@ namespace UtilityBilling.Infrastructure.Migrations
                         new
                         {
                             Id = new Guid("60a42c2d-c5e9-4692-8746-dee5831a16e6"),
-                            EndDate = new DateTime(2024, 1, 31, 0, 0, 0, 0, DateTimeKind.Utc),
+                            EndDate = new DateTime(2025, 1, 31, 0, 0, 0, 0, DateTimeKind.Utc),
                             Name = "January 2025",
-                            StartDate = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            StartDate = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Status = 2,
                             UserId = new Guid("99d5d2cf-93e1-4300-ac09-39849738d744")
                         },
                         new
                         {
                             Id = new Guid("e3a31ffb-ff65-4fcd-a652-e241e372e757"),
-                            EndDate = new DateTime(2024, 2, 28, 0, 0, 0, 0, DateTimeKind.Utc),
+                            EndDate = new DateTime(2025, 2, 28, 0, 0, 0, 0, DateTimeKind.Utc),
                             Name = "February 2025",
-                            StartDate = new DateTime(2024, 2, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            StartDate = new DateTime(2025, 2, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Status = 2,
                             UserId = new Guid("99d5d2cf-93e1-4300-ac09-39849738d744")
                         },
                         new
                         {
                             Id = new Guid("a2b48d07-98bc-48fa-893b-290d3f068a39"),
-                            EndDate = new DateTime(2024, 3, 31, 0, 0, 0, 0, DateTimeKind.Utc),
+                            EndDate = new DateTime(2025, 3, 31, 0, 0, 0, 0, DateTimeKind.Utc),
                             Name = "March 2025",
-                            StartDate = new DateTime(2024, 3, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            StartDate = new DateTime(2025, 3, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Status = 0,
                             UserId = new Guid("99d5d2cf-93e1-4300-ac09-39849738d744")
                         },
                         new
                         {
                             Id = new Guid("29a69221-03a7-41fe-9c10-4645a7db10e7"),
-                            EndDate = new DateTime(2024, 4, 30, 0, 0, 0, 0, DateTimeKind.Utc),
+                            EndDate = new DateTime(2025, 4, 30, 0, 0, 0, 0, DateTimeKind.Utc),
                             Name = "April 2025",
-                            StartDate = new DateTime(2024, 4, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            StartDate = new DateTime(2025, 4, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Status = 1,
                             UserId = new Guid("99d5d2cf-93e1-4300-ac09-39849738d744")
                         });
