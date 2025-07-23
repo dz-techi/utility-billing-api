@@ -1,7 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using UtilityBilling.Domain.Models;
 using UtilityBilling.Infrastructure.Database;
 using UtilityBilling.Infrastructure.Repositories;
 using UtilityBilling.Infrastructure.Repositories.Interfaces;
@@ -28,17 +27,12 @@ public static class DependencyInjection
                     maxRetryDelay: TimeSpan.FromSeconds(30),
                     errorCodesToAdd: null);
             });
-
-            // Enable detailed error messages in development
-            // if (configurationManager.GetValue<string>("ASPNETCORE_ENVIRONMENT") == "Development")
-            // {
-            //     options.EnableSensitiveDataLogging();
-            //     options.EnableDetailedErrors();
-            // }
         });
 
         services.AddScoped<IUtilityBillPeriodRepository, UtilityBillPeriodRepository>();
-        // services.AddScoped<IBaseRepository<ProductDto>, BaseRepository<ProductDto>>();
+        services.AddScoped<IUtilityBillRepository, UtilityBillRepository>();
+        services.AddScoped<IPropertyRepository, PropertyRepository>();
+        services.AddScoped<IUtilityTypeRepository, UtilityTypeRepository>();
 
         return services;
     }

@@ -1,5 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-using UtilityBilling.Domain.UtilityBillPeriod;
+using UtilityBilling.Domain.Models;
 using UtilityBilling.Infrastructure.Database;
 using UtilityBilling.Infrastructure.Repositories.Interfaces;
 
@@ -7,7 +7,6 @@ namespace UtilityBilling.Infrastructure.Repositories;
 
 public class UtilityBillPeriodRepository : BaseRepository<UtilityBillPeriod>, IUtilityBillPeriodRepository
 {
-
     public UtilityBillPeriodRepository(AppDbContext appDbContext) : base(appDbContext)
     {
     }

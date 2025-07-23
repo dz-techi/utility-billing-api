@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using UtilityBilling.Contracts.Requests.UtilityBillPeriod;
 using UtilityBilling.Contracts.Results.UtilityBillPeriod;
 using UtilityBilling.Domain.Exceptions;
-using UtilityBilling.Domain.UtilityBillPeriod;
 using UtilityBilling.Infrastructure.Repositories.Interfaces;
 
 namespace UtilityBilling.Api.Endpoints.UtilityBillPeriods;
@@ -34,7 +33,7 @@ public static class AddUtilityBillPeriodEndpoint
             throw new EntityAlreadyExistsException($"Billing period between dates: {request.StartDate} - {request.EndDate} already exists");
         }
 
-        var utilityBillPeriodDto = new Domain.UtilityBillPeriod.UtilityBillPeriod(userId, request.Name, request.StartDate, request.EndDate);
+        var utilityBillPeriodDto = new Domain.Models.UtilityBillPeriod(userId, request.Name, request.StartDate, request.EndDate);
 
         await utilityBillPeriodRepository.AddAsync(utilityBillPeriodDto, cancellationToken);
 

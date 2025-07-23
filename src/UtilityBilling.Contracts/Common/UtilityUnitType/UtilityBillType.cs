@@ -14,5 +14,8 @@ public enum UtilityBillType
     Internet,
     CableOrSatelliteTv,
     Telephone,
-    SecuritySystem
+    SecuritySystem,
+    Maintenance,
+    RentalFee,
+    DrinkingWater,
 }

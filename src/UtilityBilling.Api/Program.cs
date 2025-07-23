@@ -5,7 +5,9 @@ using OpenTelemetry.Logs;
 using OpenTelemetry.Resources;
 using UtilityBilling.Api;
 using UtilityBilling.Api.Endpoints.Products;
+using UtilityBilling.Api.Endpoints.Properties;
 using UtilityBilling.Api.Endpoints.UtilityBillPeriods;
+using UtilityBilling.Api.Services.Interfaces;
 using UtilityBilling.Application;
 using UtilityBilling.Infrastructure;
 using UtilityBilling.Infrastructure.Database;
@@ -57,7 +59,8 @@ using (var scope = app.Services.CreateScope())
     var services = scope.ServiceProvider;
     var context = services.GetRequiredService<AppDbContext>();
     var logger = services.GetRequiredService<ILogger<Program>>();
-
+    var dataSeedingService = services.GetRequiredService<IDataSeedingService>();
+    
     try
     {
         logger.LogInformation("Starting database migration...");
@@ -66,6 +69,11 @@ using (var scope = app.Services.CreateScope())
         await context.Database.MigrateAsync();
 
         logger.LogInformation("Database migration completed successfully.");
+
+        if (app.Environment.IsDevelopment())
+        {
+            await dataSeedingService.SeedTestingData();
+        }
     }
     catch (Exception ex)
     {
@@ -113,5 +121,6 @@ app.MapRemoveUtilityBillPeriodEndpoint();
 app.MapAddUtilityBillEndpoint();
 app.MapUpdateUtilityBillEndpoint();
 app.MapRemoveUtilityBillEndpoint();
+app.MapGetPropertiesForSelectEndpoint();
 
 app.Run();

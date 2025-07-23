@@ -1,4 +1,6 @@
+using System.ComponentModel.DataAnnotations;
 using UtilityBilling.Contracts.Common.Enums;
+using UtilityBilling.Contracts.Common.UtilityUnitType;
 using UtilityBilling.Domain.Common;
 
 namespace UtilityBilling.Domain.Models;
@@ -6,9 +8,8 @@ namespace UtilityBilling.Domain.Models;
 public class UtilityType : BaseEntity
 {
     public Guid PropertyId { get; set; }
-    
-    public string Name { get; set; } = null!;
 
+    [MaxLength(500)]
     public string Description { get; set; } = null!;
     
     public bool Default { get; set; }
@@ -16,6 +17,8 @@ public class UtilityType : BaseEntity
     public bool HasUnitMeasurement { get; set; }
     
     public MeasurementUnitType? UnitMeasurementType { get; set; }
+    
+    public UtilityBillType UtilityBillType { get; set; }
     
     public Property Property { get; set; } = null!;
     

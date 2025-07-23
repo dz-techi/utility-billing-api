@@ -1,0 +1,5 @@
+### GET request to retrieve properties for a select dropdown
+
+GET {{baseUrl}}/api/properties/select
+
+###
