@@ -4,11 +4,11 @@ using UtilityBilling.Infrastructure.Repositories.Interfaces;
 
 namespace UtilityBilling.Api.Endpoints.UtilityBillPeriods;
 
-public static class RemoveUtilityBillPeriodEndpoint
+public class RemoveUtilityBillPeriodEndpoint : IEndpoint
 {
-    public static void MapRemoveUtilityBillPeriodEndpoint(this IEndpointRouteBuilder app)
+    public void MapEndpoint(IEndpointRouteBuilder builder)
     {
-        app.MapDelete("/api/utility-bill-periods/{id}", HandleRemoveUtilityBillPeriod)
+        builder.MapDelete("utility-bill-periods/{id}", HandleRemoveUtilityBillPeriod)
             .WithName("RemoveUtilityBillPeriod")
             .WithOpenApi();
     }

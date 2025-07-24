@@ -6,11 +6,11 @@ using UtilityBilling.Infrastructure.Repositories.Interfaces;
 
 namespace UtilityBilling.Api.Endpoints.UtilityBillPeriods;
 
-public static class GetUtilityBillPeriodByIdEndpoint
+public class GetUtilityBillPeriodByIdEndpoint : IEndpoint
 {
-    public static void MapGetUtilityBillPeriodByIdEndpoint(this IEndpointRouteBuilder app)
+    public void MapEndpoint(IEndpointRouteBuilder builder)
     {
-        app.MapGet("/api/utility-bill-periods/{id}", HandleGetUtilityBillPeriodById)
+        builder.MapGet("utility-bill-periods/{id}", HandleGetUtilityBillPeriodById)
             .WithName("GetUtilityBillPeriodById")
             .WithOpenApi();
     }

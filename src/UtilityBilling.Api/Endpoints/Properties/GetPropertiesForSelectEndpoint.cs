@@ -4,14 +4,14 @@ using UtilityBilling.Infrastructure.Repositories.Interfaces;
 
 namespace UtilityBilling.Api.Endpoints.Properties;
 
-public static class GetPropertiesForSelectEndpoint
+public class GetPropertiesForSelectEndpoint : IEndpoint
 {
-    public static void MapGetPropertiesForSelectEndpoint(this IEndpointRouteBuilder app)
+    public void MapEndpoint(IEndpointRouteBuilder builder)
     {
-        app.MapGet("/api/properties/select", HandleGetPropertiesForSelect)
-        .WithName("GetPropertiesForSelect")
-        .Produces<IEnumerable<object>>(StatusCodes.Status200OK)
-        .Produces(StatusCodes.Status500InternalServerError);
+        builder.MapGet("/properties/select", HandleGetPropertiesForSelect)
+            .WithName("GetPropertiesForSelect")
+            .Produces<IEnumerable<object>>(StatusCodes.Status200OK)
+            .Produces(StatusCodes.Status500InternalServerError);
     }
     
     private static async Task<IResult> HandleGetPropertiesForSelect(

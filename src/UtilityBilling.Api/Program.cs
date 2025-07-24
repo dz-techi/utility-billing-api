@@ -1,12 +1,13 @@
+using System.Reflection;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Asp.Versioning;
+using Asp.Versioning.Builder;
 using Microsoft.EntityFrameworkCore;
 using OpenTelemetry.Logs;
 using OpenTelemetry.Resources;
 using UtilityBilling.Api;
-using UtilityBilling.Api.Endpoints.Products;
-using UtilityBilling.Api.Endpoints.Properties;
-using UtilityBilling.Api.Endpoints.UtilityBillPeriods;
+using UtilityBilling.Api.Extensions;
 using UtilityBilling.Api.Services.Interfaces;
 using UtilityBilling.Application;
 using UtilityBilling.Infrastructure;
@@ -25,8 +26,21 @@ var environment = builder.Environment.EnvironmentName;
 Console.WriteLine($"Current environment: {environment}");
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddApiVersioning(options =>
+{
+    options.DefaultApiVersion = new ApiVersion(1);
+    options.ApiVersionReader = new UrlSegmentApiVersionReader();
+}).AddApiExplorer(options =>
+{
+    options.GroupNameFormat = "'v'V";
+    options.SubstituteApiVersionInUrl = true;
+});
+
+builder.Services.AddEndpoints(typeof(Program).Assembly);
 
 builder.Services
     .AddApi(builder.Configuration)
@@ -45,6 +59,17 @@ builder.Logging.AddOpenTelemetry(options =>
 });
 
 var app = builder.Build();
+
+ApiVersionSet apiVersionSet = app.NewApiVersionSet()
+    .HasApiVersion(new ApiVersion(1))
+    .ReportApiVersions()
+    .Build();
+
+RouteGroupBuilder versionedGroup = app
+    .MapGroup("api/v{version:apiVersion}")
+    .WithApiVersionSet(apiVersionSet);
+
+app.MapEndpoints(versionedGroup);
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -111,16 +136,16 @@ app.UseExceptionHandler(_ => { });
 app.UseHttpsRedirection();
 
 // Map endpoints using Vertical Slice Architecture
-app.MapGetProductEndpoint();
-app.MapAddProductEndpoint();
-
-app.MapGetUtilityBillPeriodsEndpoint();
-app.MapAddUtilityBillPeriodEndpoint();
-app.MapGetUtilityBillPeriodByIdEndpoint();
-app.MapRemoveUtilityBillPeriodEndpoint();
-app.MapAddUtilityBillEndpoint();
-app.MapUpdateUtilityBillEndpoint();
-app.MapRemoveUtilityBillEndpoint();
-app.MapGetPropertiesForSelectEndpoint();
+// app.MapGetProductEndpoint();
+// app.MapAddProductEndpoint();
+//
+// app.MapGetUtilityBillPeriodsEndpoint();
+// app.MapAddUtilityBillPeriodEndpoint();
+// app.MapGetUtilityBillPeriodByIdEndpoint();
+// app.MapRemoveUtilityBillPeriodEndpoint();
+// app.MapAddUtilityBillEndpoint();
+// app.MapUpdateUtilityBillEndpoint();
+// app.MapRemoveUtilityBillEndpoint();
+// app.MapGetPropertiesForSelectEndpoint();
 
 app.Run();

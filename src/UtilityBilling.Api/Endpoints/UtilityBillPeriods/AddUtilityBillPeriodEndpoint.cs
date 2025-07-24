@@ -7,11 +7,11 @@ using UtilityBilling.Infrastructure.Repositories.Interfaces;
 
 namespace UtilityBilling.Api.Endpoints.UtilityBillPeriods;
 
-public static class AddUtilityBillPeriodEndpoint
+public class AddUtilityBillPeriodEndpoint : IEndpoint
 {
-    public static void MapAddUtilityBillPeriodEndpoint(this IEndpointRouteBuilder app)
+    public void MapEndpoint(IEndpointRouteBuilder builder)
     {
-        app.MapPost("/api/utility-bill-periods", HandleAddUtilityBillPeriod)
+        builder.MapPost("utility-bill-periods", HandleAddUtilityBillPeriod)
             .WithName("AddUtilityBillPeriod")
             .WithOpenApi();
     }
