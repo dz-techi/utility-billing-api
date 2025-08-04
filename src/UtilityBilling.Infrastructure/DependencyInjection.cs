@@ -32,7 +32,9 @@ public static class DependencyInjection
         services.AddScoped<IUtilityBillPeriodRepository, UtilityBillPeriodRepository>();
         services.AddScoped<IUtilityBillRepository, UtilityBillRepository>();
         services.AddScoped<IPropertyRepository, PropertyRepository>();
+        services.AddScoped<IPropertyUserRepository, PropertyUserRepository>();
         services.AddScoped<IUtilityTypeRepository, UtilityTypeRepository>();
+        services.AddScoped<IUserRepository, UserRepository>();
 
         return services;
     }

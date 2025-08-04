@@ -1,6 +1,6 @@
 using UtilityBilling.Contracts.Common;
 
-namespace UtilityBilling.Contracts.Results.UtilityBillPeriod;
+namespace UtilityBilling.Application.Results.UtilityBillPeriod;
 
 public class GetUtilityBillPeriodResult
 {

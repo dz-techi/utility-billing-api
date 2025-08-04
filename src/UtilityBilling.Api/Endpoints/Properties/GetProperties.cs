@@ -4,17 +4,17 @@ using UtilityBilling.Infrastructure.Repositories.Interfaces;
 
 namespace UtilityBilling.Api.Endpoints.Properties;
 
-public class GetPropertiesForSelectEndpoint : IEndpoint
+public class GetProperties : IEndpoint
 {
     public void MapEndpoint(IEndpointRouteBuilder builder)
     {
-        builder.MapGet("/properties/select", HandleGetPropertiesForSelect)
-            .WithName("GetPropertiesForSelect")
+        builder.MapGet("/properties", HandleGetProperties)
+            .WithName("GetProperties")
             .Produces<IEnumerable<object>>(StatusCodes.Status200OK)
             .Produces(StatusCodes.Status500InternalServerError);
     }
     
-    private static async Task<IResult> HandleGetPropertiesForSelect(
+    private static async Task<IResult> HandleGetProperties(
         [FromServices] IPropertyRepository propertyRepository,
         CancellationToken cancellationToken)
     {
@@ -27,9 +27,7 @@ public class GetPropertiesForSelectEndpoint : IEndpoint
             return Results.NotFound("No properties found for the user.");
         }
 
-        var result = properties
-            .Select(PropertySelectItem.FromPropertyDto)
-            .ToList();
+        var result = properties.Select(PropertyItem.FromPropertyDto);
         
         return Results.Ok(result);
     }

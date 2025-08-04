@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using UtilityBilling.Infrastructure.Database;
@@ -11,9 +12,11 @@ using UtilityBilling.Infrastructure.Database;
 namespace UtilityBilling.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250804184432_AddPropertyUsers")]
+    partial class AddPropertyUsers
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -91,6 +94,9 @@ namespace UtilityBilling.Infrastructure.Migrations
                     b.Property<DateTime>("AssignedDate")
                         .HasColumnType("timestamp with time zone");
 
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("boolean");
+
                     b.Property<Guid>("PropertyId")
                         .HasColumnType("uuid");
 
@@ -106,7 +112,7 @@ namespace UtilityBilling.Infrastructure.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("PropertyUsers");
+                    b.ToTable("PropertyUser");
                 });
 
             modelBuilder.Entity("UtilityBilling.Domain.Models.User", b =>
@@ -145,7 +151,7 @@ namespace UtilityBilling.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Users");
+                    b.ToTable("User");
                 });
 
             modelBuilder.Entity("UtilityBilling.Domain.Models.UtilityBill", b =>

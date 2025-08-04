@@ -12,6 +12,8 @@ public class AppDbContext : DbContext
     public DbSet<UtilityType> UtilityTypes { get; set; }
     public DbSet<UtilityBillPeriod> UtilityBillPeriods { get; set; }
     public DbSet<UtilityBill> UtilityBills { get; set; }
+    public DbSet<User> Users { get; set; }
+    public DbSet<PropertyUser> PropertyUsers { get; set; }
     
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -27,6 +29,18 @@ public class AppDbContext : DbContext
             .HasMany(p => p.UtilityBillPeriods)
             .WithOne(u => u.Property)
             .HasForeignKey(u => u.PropertyId)
+            .OnDelete(DeleteBehavior.Cascade);
+    
+        modelBuilder.Entity<Property>()
+            .HasMany(p => p.PropertyUsers)
+            .WithOne(pu => pu.Property)
+            .HasForeignKey(pu => pu.PropertyId)
+            .OnDelete(DeleteBehavior.Cascade);
+        
+        modelBuilder.Entity<User>()
+            .HasMany(u => u.PropertyUsers)
+            .WithOne(pu => pu.User)
+            .HasForeignKey(pu => pu.UserId)
             .OnDelete(DeleteBehavior.Cascade);
         
         modelBuilder.Entity<UtilityBillPeriod>()

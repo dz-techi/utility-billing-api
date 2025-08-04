@@ -16,6 +16,9 @@ public class PropertyRepository : BaseRepository<Property>, IPropertyRepository
         return await _context.Properties
             .AsNoTracking()
             .Where(p => p.OwnerId == userId)
+            .Include(p => p.Address)
+            .Include(p => p.PropertyUsers)
+            .ThenInclude(pu => pu.User)
             .OrderBy(p => p.Name)
             .ToListAsync(cancellationToken);
     }

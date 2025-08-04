@@ -1,4 +1,4 @@
-namespace UtilityBilling.Contracts.Results.Product;
+namespace UtilityBilling.Application.Results.Product;
 
 public class GetProductResult
 {

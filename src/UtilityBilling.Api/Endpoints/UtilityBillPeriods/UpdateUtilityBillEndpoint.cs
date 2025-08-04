@@ -1,7 +1,7 @@
 using MapsterMapper;
 using Microsoft.AspNetCore.Mvc;
+using UtilityBilling.Application.Results.UtilityBillPeriod;
 using UtilityBilling.Contracts.Requests.UtilityBillPeriod;
-using UtilityBilling.Contracts.Results.UtilityBillPeriod;
 using UtilityBilling.Domain.Exceptions;
 using UtilityBilling.Infrastructure.Repositories.Interfaces;
 

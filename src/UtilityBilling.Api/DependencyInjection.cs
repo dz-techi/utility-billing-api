@@ -19,8 +19,6 @@ public static class DependencyInjection
         services.AddProblemDetails();
         services.AddExceptionHandler<GlobalExceptionHandler>();
 
-        services.AddScoped<IDataSeedingService, DataSeedingService>();
-
         services.AddOpenTelemetry()
             .ConfigureResource(res => res.AddService("UtilityBilling.Api"))
             .WithMetrics(m =>

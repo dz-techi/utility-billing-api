@@ -1,3 +1,4 @@
+using Microsoft.Extensions.Logging;
 using UtilityBilling.Api.Services.Interfaces;
 using UtilityBilling.Contracts.Common;
 using UtilityBilling.Contracts.Common.Enums;
@@ -5,7 +6,7 @@ using UtilityBilling.Contracts.Common.UtilityUnitType;
 using UtilityBilling.Domain.Models;
 using UtilityBilling.Infrastructure.Repositories.Interfaces;
 
-namespace UtilityBilling.Api.Services;
+namespace UtilityBilling.Application.Services;
 
 public class DataSeedingService : IDataSeedingService
 {
@@ -14,19 +15,22 @@ public class DataSeedingService : IDataSeedingService
     private readonly IUtilityBillRepository _utilityBillRepository;
     private readonly IPropertyRepository _propertyRepository;
     private readonly IUtilityTypeRepository _utilityTypeRepository;
+    private readonly IUserRepository _userRepository;
 
     public DataSeedingService(
         ILogger<DataSeedingService> logger, 
         IUtilityBillPeriodRepository utilityBillPeriodRepository, 
-         IUtilityBillRepository utilityBillRepository, 
+        IUtilityBillRepository utilityBillRepository, 
         IPropertyRepository propertyRepository, 
-        IUtilityTypeRepository utilityTypeRepository)
+        IUtilityTypeRepository utilityTypeRepository, 
+        IUserRepository userRepository)
     {
         _logger = logger;
         _utilityBillPeriodRepository = utilityBillPeriodRepository;
         _utilityBillRepository = utilityBillRepository;
         _propertyRepository = propertyRepository;
         _utilityTypeRepository = utilityTypeRepository;
+        _userRepository = userRepository;
     }
 
     public async Task SeedTestingData()
@@ -40,10 +44,64 @@ public class DataSeedingService : IDataSeedingService
         var billPeriod5Id = new Guid("29a69221-03a7-41fe-9c10-4645a7db10e7");
         
         var user1Id = new Guid("99d5d2cf-93e1-4300-ac09-39849738d744");
-
+        var user2Id = new Guid("c70fb249-ad8c-45da-a675-93735e0ede70");
+        var user3Id = new Guid("9fdda49e-7557-4ac9-90b4-27e2534d9a9e");
+        
         var property1Id = new Guid("f3b2c4d5-6e7f-8a9b-0c1d-2e3f4a5b6c7d");
         var property2Id = new Guid("a1b2c3d4-e5f6-7a8b-9c0d-1e2f3a4b5c6d");
 
+        var users = new List<User>
+        {
+            new()
+            {
+                Id = user1Id,
+                CreatedDate = DateTime.UtcNow,
+                Email = "dainis.zogots@gmail.com",
+                FirstName = "Dainis",
+                IsActive = true,
+                LastLoginDate = DateTime.UtcNow,
+                LastName = "Žogots"
+            },
+            new()
+            {
+                Id = user2Id,
+                CreatedDate = DateTime.UtcNow,
+                Email = "jelena.zogota@gmail.com",
+                FirstName = "Jeļena",
+                IsActive = true,
+                LastLoginDate = DateTime.UtcNow,
+                LastName = "Žogota"
+            },
+            new()
+            {
+                Id = user3Id,
+                CreatedDate = DateTime.UtcNow,
+                Email = "daniels.vilanu@gmail.com",
+                FirstName = "Daniels",
+                IsActive = true,
+                LastLoginDate = DateTime.UtcNow,
+                LastName = "Bikovskis"
+            }
+        };
+
+        foreach (var user in users)
+        {
+            var existingUser = await _userRepository.GetByIdAsync(user.Id, CancellationToken.None);
+
+            if (existingUser != null)
+            {
+                _logger.LogInformation("User with ID {Id} already exists, skipping", user.Id);
+                
+                continue;
+            }
+            
+            await _userRepository.AddAsync(user, CancellationToken.None);
+            
+            _logger.LogInformation("Added user with ID {Id}", user.Id);
+        }
+
+        await _userRepository.SaveChangesAsync(CancellationToken.None);
+        
         var properties = new List<Property>
         {
             new Property
@@ -52,7 +110,23 @@ public class DataSeedingService : IDataSeedingService
                 Name = "My Apartment in Rēzekne",
                 Address = new Address("Atbrīvošanas aleja 119B - 48", "Rēzekne", "LV-4601", "Latvia"),
                 OwnerId = user1Id,
-                PropertyType = PropertyType.Apartment
+                PropertyType = PropertyType.Apartment,
+                PropertyUsers = [
+                    new PropertyUser
+                    {
+                        AssignedDate = DateTime.UtcNow.AddDays(-20),
+                        UserId = user1Id,
+                        Role = UserRole.Owner,
+                        PropertyId = property1Id
+                    },
+                    new PropertyUser
+                    {
+                        AssignedDate = DateTime.UtcNow.AddDays(-10),
+                        UserId = user2Id,
+                        Role = UserRole.Admin,
+                        PropertyId = property1Id
+                    }
+                ]
             },
             new Property
             {
@@ -60,7 +134,21 @@ public class DataSeedingService : IDataSeedingService
                 Name = "Tēva dzīvoklis Rēzeknē",
                 Address = new Address("Vaļņu iela 2A - 51", "Rēzekne", "LV-4601", "Latvia"),
                 OwnerId = user1Id,
-                PropertyType = PropertyType.Apartment
+                PropertyType = PropertyType.Apartment,
+                PropertyUsers = [
+                    new PropertyUser
+                    {
+                        AssignedDate = DateTime.UtcNow.AddDays(-20),
+                        UserId = user1Id,
+                        Role = UserRole.Owner
+                    },
+                    new PropertyUser
+                    {
+                        AssignedDate = DateTime.UtcNow.AddDays(-10),
+                        UserId = user3Id,
+                        Role = UserRole.Viewer
+                    }
+                ]
             }
         };
         
