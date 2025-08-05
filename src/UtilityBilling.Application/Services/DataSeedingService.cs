@@ -1,8 +1,7 @@
 using Microsoft.Extensions.Logging;
 using UtilityBilling.Api.Services.Interfaces;
-using UtilityBilling.Contracts.Common;
-using UtilityBilling.Contracts.Common.Enums;
-using UtilityBilling.Contracts.Common.UtilityUnitType;
+using UtilityBilling.Domain.Common;
+using UtilityBilling.Domain.Common.UtilityUnitType;
 using UtilityBilling.Domain.Models;
 using UtilityBilling.Infrastructure.Repositories.Interfaces;
 

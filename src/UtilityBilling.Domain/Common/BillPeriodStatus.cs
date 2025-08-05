@@ -1,4 +1,4 @@
-namespace UtilityBilling.Contracts.Common;
+namespace UtilityBilling.Domain.Common;
 
 public enum BillPeriodStatus
 {

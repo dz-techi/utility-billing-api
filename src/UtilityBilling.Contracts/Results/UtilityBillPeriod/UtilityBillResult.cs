@@ -1,5 +1,4 @@
-using UtilityBilling.Contracts.Common.Enums;
-using UtilityBilling.Contracts.Common.UtilityUnitType;
+using UtilityBilling.Domain.Common.UtilityUnitType;
 
 namespace UtilityBilling.Application.Results.UtilityBillPeriod;
 

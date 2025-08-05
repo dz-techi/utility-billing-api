@@ -1,7 +1,6 @@
 using System.ComponentModel.DataAnnotations;
-using UtilityBilling.Contracts.Common.Enums;
-using UtilityBilling.Contracts.Common.UtilityUnitType;
 using UtilityBilling.Domain.Common;
+using UtilityBilling.Domain.Common.UtilityUnitType;
 
 namespace UtilityBilling.Domain.Models;
 

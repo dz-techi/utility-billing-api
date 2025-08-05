@@ -1,4 +1,4 @@
-using UtilityBilling.Contracts.Common;
+using UtilityBilling.Domain.Common;
 using UtilityBilling.Domain.Models;
 
 namespace UtilityBilling.Application.Results.Property;

@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
 
-namespace UtilityBilling.Contracts.Common.UtilityUnitType;
+namespace UtilityBilling.Domain.Common.UtilityUnitType;
 
 [JsonConverter(typeof(JsonStringEnumConverter<UtilityBillType>))]
 public enum UtilityBillType

@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
 using UtilityBilling.Contracts.Requests.Property;
-using UtilityBilling.Domain.Exceptions;
 using UtilityBilling.Domain.Models;
 using UtilityBilling.Infrastructure.Repositories.Interfaces;
 
@@ -77,7 +76,7 @@ public class AddPropertyUserEndpoint : IEndpoint
         {
             PropertyId = propertyId,
             UserId = user.Id,
-            Role = request.Role
+            request.Role
         });
     }
 }

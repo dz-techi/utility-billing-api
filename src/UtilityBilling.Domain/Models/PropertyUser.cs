@@ -1,5 +1,4 @@
 using System.ComponentModel.DataAnnotations;
-using UtilityBilling.Contracts.Common;
 using UtilityBilling.Domain.Common;
 
 namespace UtilityBilling.Domain.Models;
