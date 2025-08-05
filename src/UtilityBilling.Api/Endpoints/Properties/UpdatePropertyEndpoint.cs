@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
 using UtilityBilling.Contracts.Requests.Property;
-using UtilityBilling.Domain.Exceptions;
 using UtilityBilling.Infrastructure.Repositories.Interfaces;
 
 namespace UtilityBilling.Api.Endpoints.Properties;
@@ -39,8 +38,8 @@ public class UpdatePropertyEndpoint : IEndpoint
         return Results.Ok(new
         {
             PropertyId = propertyId,
-            Name = request.Name,
-            PropertyType = request.PropertyType
+            request.Name,
+            request.PropertyType
         });
     }
 }
