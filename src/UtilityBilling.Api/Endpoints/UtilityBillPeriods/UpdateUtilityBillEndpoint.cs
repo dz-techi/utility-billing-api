@@ -1,7 +1,7 @@
 using MapsterMapper;
 using Microsoft.AspNetCore.Mvc;
-using UtilityBilling.Application.Results.UtilityBillPeriod;
 using UtilityBilling.Contracts.Requests.UtilityBillPeriod;
+using UtilityBilling.Contracts.Results.UtilityBillPeriod;
 using UtilityBilling.Domain.Exceptions;
 using UtilityBilling.Infrastructure.Repositories.Interfaces;
 
@@ -43,7 +43,8 @@ public class UpdateUtilityBillEndpoint : IEndpoint
         utilityBillPeriodRepository.Update(utilityBillPeriod);
         await utilityBillPeriodRepository.SaveChangesAsync(cancellationToken);
 
-        var result = mapper.Map<GetUtilityBillPeriodResult>(utilityBillPeriod);
+        var result = GetUtilityBillPeriodResult.FromDto(utilityBillPeriod);
+        
         return Results.Ok(result);
     }
 }

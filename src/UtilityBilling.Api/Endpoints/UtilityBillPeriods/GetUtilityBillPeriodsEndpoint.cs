@@ -1,6 +1,6 @@
 using MapsterMapper;
 using Microsoft.AspNetCore.Mvc;
-using UtilityBilling.Application.Results.UtilityBillPeriod;
+using UtilityBilling.Contracts.Results.UtilityBillPeriod;
 using UtilityBilling.Infrastructure.Repositories.Interfaces;
 
 namespace UtilityBilling.Api.Endpoints.UtilityBillPeriods;
@@ -27,14 +27,16 @@ public class GetUtilityBillPeriodsEndpoint : IEndpoint
         var utilityBillPeriods = await utilityBillPeriodRepository.GetAllByUserIdAsync(userId, cancellationToken);
         logger.LogInformation("Retrieved {Count} utility bill periods", utilityBillPeriods.Count);
 
-        var result = mapper.Map<List<GetUtilityBillPeriodResult>>(utilityBillPeriods);
-
-        if (result.Count == 0)
+        if (utilityBillPeriods.Count == 0)
         {
             logger.LogInformation("No content returned");
             return Results.NoContent();
         }
-
+        
+        var result = utilityBillPeriods
+            .Select(GetUtilityBillPeriodResult.FromDto)
+            .ToList();
+        
         logger.LogInformation("Returning {Count} results", result.Count);
         return Results.Ok(result);
     }

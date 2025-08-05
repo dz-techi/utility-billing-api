@@ -30,6 +30,7 @@ public class UtilityBillPeriodRepository : BaseRepository<UtilityBillPeriod>, IU
         return await _context.UtilityBillPeriods.AsNoTracking()
             .Where(u => u.UserId == userId)
             .OrderByDescending(u => u.StartDate)
+            .Include(u => u.UtilityBills)
             .ToListAsync(cancellationToken);
     }
 }

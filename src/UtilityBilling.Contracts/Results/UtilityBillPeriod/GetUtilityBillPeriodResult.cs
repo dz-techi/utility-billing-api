@@ -1,6 +1,6 @@
 using UtilityBilling.Domain.Common;
 
-namespace UtilityBilling.Application.Results.UtilityBillPeriod;
+namespace UtilityBilling.Contracts.Results.UtilityBillPeriod;
 
 public class GetUtilityBillPeriodResult
 {
@@ -15,4 +15,17 @@ public class GetUtilityBillPeriodResult
     public DateTime EndDate { get; set; }
 
     public BillPeriodStatus Status { get; set; }
+
+    public static GetUtilityBillPeriodResult FromDto(Domain.Models.UtilityBillPeriod utilityBillPeriod)
+    {
+        return new GetUtilityBillPeriodResult
+        {
+            Id = utilityBillPeriod.Id,
+            BillCount = utilityBillPeriod.UtilityBills.Count,
+            Name = utilityBillPeriod.Name,
+            StartDate = utilityBillPeriod.StartDate,
+            EndDate = utilityBillPeriod.EndDate,
+            Status = utilityBillPeriod.Status
+        };
+    }
 }
