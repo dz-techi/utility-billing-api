@@ -16,7 +16,7 @@ public class Property : BaseEntity
 
     public List<UtilityBillPeriod> UtilityBillPeriods { get; set; } = null!;
 
-    public List<UtilityType> UtilityTypes { get; set; } = null!;
+    public List<PropertyUtilityType> UtilityTypes { get; set; } = null!;
 
     // Navigation properties for user management
     public List<PropertyUser> PropertyUsers { get; set; } = new();

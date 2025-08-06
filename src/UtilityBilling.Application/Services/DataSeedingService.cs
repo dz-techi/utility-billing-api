@@ -17,11 +17,11 @@ public class DataSeedingService : IDataSeedingService
     private readonly IUserRepository _userRepository;
 
     public DataSeedingService(
-        ILogger<DataSeedingService> logger, 
-        IUtilityBillPeriodRepository utilityBillPeriodRepository, 
-        IUtilityBillRepository utilityBillRepository, 
-        IPropertyRepository propertyRepository, 
-        IUtilityTypeRepository utilityTypeRepository, 
+        ILogger<DataSeedingService> logger,
+        IUtilityBillPeriodRepository utilityBillPeriodRepository,
+        IUtilityBillRepository utilityBillRepository,
+        IPropertyRepository propertyRepository,
+        IUtilityTypeRepository utilityTypeRepository,
         IUserRepository userRepository)
     {
         _logger = logger;
@@ -35,17 +35,17 @@ public class DataSeedingService : IDataSeedingService
     public async Task SeedTestingData()
     {
         _logger.LogInformation("Starting to seed data for Development");
-        
+
         var billPeriod1Id = new Guid("813ae334-2637-4212-b0de-100cf7faa6ab");
         var billPeriod2Id = new Guid("60a42c2d-c5e9-4692-8746-dee5831a16e6");
         var billPeriod3Id = new Guid("e3a31ffb-ff65-4fcd-a652-e241e372e757");
         var billPeriod4Id = new Guid("a2b48d07-98bc-48fa-893b-290d3f068a39");
         var billPeriod5Id = new Guid("29a69221-03a7-41fe-9c10-4645a7db10e7");
-        
+
         var user1Id = new Guid("99d5d2cf-93e1-4300-ac09-39849738d744");
         var user2Id = new Guid("c70fb249-ad8c-45da-a675-93735e0ede70");
         var user3Id = new Guid("9fdda49e-7557-4ac9-90b4-27e2534d9a9e");
-        
+
         var property1Id = new Guid("f3b2c4d5-6e7f-8a9b-0c1d-2e3f4a5b6c7d");
         var property2Id = new Guid("a1b2c3d4-e5f6-7a8b-9c0d-1e2f3a4b5c6d");
 
@@ -90,17 +90,17 @@ public class DataSeedingService : IDataSeedingService
             if (existingUser != null)
             {
                 _logger.LogInformation("User with ID {Id} already exists, skipping", user.Id);
-                
+
                 continue;
             }
-            
+
             await _userRepository.AddAsync(user, CancellationToken.None);
-            
+
             _logger.LogInformation("Added user with ID {Id}", user.Id);
         }
 
         await _userRepository.SaveChangesAsync(CancellationToken.None);
-        
+
         var properties = new List<Property>
         {
             new Property
@@ -150,11 +150,11 @@ public class DataSeedingService : IDataSeedingService
                 ]
             }
         };
-        
+
         foreach (var property in properties)
         {
             var existingProperty = await _propertyRepository.GetByIdAsync(property.Id, CancellationToken.None);
-            
+
             if (existingProperty != null)
             {
                 _logger.LogInformation("Property with ID {Id} already exists, skipping.", property.Id);
@@ -162,15 +162,15 @@ public class DataSeedingService : IDataSeedingService
             }
 
             await _propertyRepository.AddAsync(property, CancellationToken.None);
-            
+
             _logger.LogInformation("Added property with ID {Id}", property.Id);
         }
-        
+
         await _propertyRepository.SaveChangesAsync(CancellationToken.None);
-        
-        var utilityTypes = new List<UtilityType>
+
+        var utilityTypes = new List<PropertyUtilityType>
         {
-            new UtilityType
+            new PropertyUtilityType
             {
                 Id = new Guid("c1d2e3f4-5a6b-7c8d-9e0f-1a2b3c4d5e6f"),
                 HasUnitMeasurement = true,
@@ -179,7 +179,7 @@ public class DataSeedingService : IDataSeedingService
                 PropertyId = property2Id,
                 UtilityBillType = UtilityBillType.Electricity
             },
-            new UtilityType
+            new PropertyUtilityType
             {
                 Id = new Guid("dcd9e715-c1cd-4ee4-b391-6e6260f51dfb"),
                 HasUnitMeasurement = true,
@@ -188,7 +188,7 @@ public class DataSeedingService : IDataSeedingService
                 PropertyId = property2Id,
                 UtilityBillType = UtilityBillType.Water
             },
-            new UtilityType
+            new PropertyUtilityType
             {
                 Id = new Guid("c3cae69a-8787-4656-b033-7122f4d4e7ff"),
                 HasUnitMeasurement = true,
@@ -197,7 +197,7 @@ public class DataSeedingService : IDataSeedingService
                 PropertyId = property2Id,
                 UtilityBillType = UtilityBillType.Heating
             },
-            new UtilityType
+            new PropertyUtilityType
             {
                 Id = new Guid("10d2ffd3-7f6a-4736-ad40-3a00dd15d592"),
                 HasUnitMeasurement = false,
@@ -206,7 +206,7 @@ public class DataSeedingService : IDataSeedingService
                 PropertyId = property2Id,
                 UtilityBillType = UtilityBillType.Maintenance
             },
-            new UtilityType
+            new PropertyUtilityType
             {
                 Id = new Guid("165b85a0-8afc-4c47-82a4-7870f2b4914c"),
                 HasUnitMeasurement = false,
@@ -215,7 +215,7 @@ public class DataSeedingService : IDataSeedingService
                 PropertyId = property2Id,
                 UtilityBillType = UtilityBillType.RentalFee
             },
-            new UtilityType
+            new PropertyUtilityType
             {
                 Id = new Guid("d7c47590-ef00-4b6b-96a8-d82cf277e5ad"),
                 HasUnitMeasurement = true,
@@ -224,7 +224,7 @@ public class DataSeedingService : IDataSeedingService
                 PropertyId = property1Id,
                 UtilityBillType = UtilityBillType.Electricity
             },
-            new UtilityType
+            new PropertyUtilityType
             {
                 Id = new Guid("3f9c2714-05ee-41d1-b25c-04f3312ead47"),
                 HasUnitMeasurement = true,
@@ -233,7 +233,7 @@ public class DataSeedingService : IDataSeedingService
                 PropertyId = property1Id,
                 UtilityBillType = UtilityBillType.Water
             },
-            new UtilityType
+            new PropertyUtilityType
             {
                 Id = new Guid("042e4a44-f0ea-4c1d-8caf-12d67ffc73b7"),
                 HasUnitMeasurement = true,
@@ -242,7 +242,7 @@ public class DataSeedingService : IDataSeedingService
                 PropertyId = property1Id,
                 UtilityBillType = UtilityBillType.Gas
             },
-            new UtilityType
+            new PropertyUtilityType
             {
                 Id = new Guid("c09b02c5-d706-40a0-b734-ab8313715d32"),
                 HasUnitMeasurement = true,
@@ -251,7 +251,7 @@ public class DataSeedingService : IDataSeedingService
                 PropertyId = property1Id,
                 UtilityBillType = UtilityBillType.Heating
             },
-            new UtilityType
+            new PropertyUtilityType
             {
                 Id = new Guid("f5ff2d6d-10e2-4792-8bec-799125ff80e7"),
                 HasUnitMeasurement = false,
@@ -260,7 +260,7 @@ public class DataSeedingService : IDataSeedingService
                 PropertyId = property1Id,
                 UtilityBillType = UtilityBillType.Maintenance
             },
-            new UtilityType
+            new PropertyUtilityType
             {
                 Id = new Guid("6b279229-6f9f-4ad4-b860-b6d7ae4b177f"),
                 HasUnitMeasurement = false,
@@ -269,7 +269,7 @@ public class DataSeedingService : IDataSeedingService
                 PropertyId = property1Id,
                 UtilityBillType = UtilityBillType.Internet
             },
-            new UtilityType
+            new PropertyUtilityType
             {
                 Id = new Guid("2aa082e4-ff34-4dd9-8eaf-c4b414890084"),
                 HasUnitMeasurement = true,
@@ -279,11 +279,11 @@ public class DataSeedingService : IDataSeedingService
                 UtilityBillType = UtilityBillType.DrinkingWater
             }
         };
-        
-        foreach (var utility in utilityTypes) 
+
+        foreach (var utility in utilityTypes)
         {
             var existingUtility = await _utilityTypeRepository.GetByIdAsync(utility.Id, CancellationToken.None);
-            
+
             if (existingUtility != null)
             {
                 _logger.LogInformation("Utility type with ID {Id} already exists, skipping.", utility.Id);
@@ -291,12 +291,12 @@ public class DataSeedingService : IDataSeedingService
             }
 
             await _utilityTypeRepository.AddAsync(utility, CancellationToken.None);
-            
+
             _logger.LogInformation("Added utility type with ID {Id}", utility.Id);
         }
-        
+
         await _utilityTypeRepository.SaveChangesAsync(CancellationToken.None);
-        
+
         var utilityBillPeriods = new List<UtilityBillPeriod>
         {
             new UtilityBillPeriod
@@ -350,11 +350,11 @@ public class DataSeedingService : IDataSeedingService
                 PropertyId = property1Id,
             }
         };
-        
+
         foreach (var billPeriod in utilityBillPeriods)
         {
             var existingBillPeriod = await _utilityBillPeriodRepository.GetByIdAsync(billPeriod.Id, CancellationToken.None);
-            
+
             if (existingBillPeriod != null)
             {
                 _logger.LogInformation("Utility bill period with ID {Id} already exists, skipping.", billPeriod.Id);
@@ -362,12 +362,12 @@ public class DataSeedingService : IDataSeedingService
             }
 
             await _utilityBillPeriodRepository.AddAsync(billPeriod, CancellationToken.None);
-            
+
             _logger.LogInformation("Added utility bill period with ID {Id}", billPeriod.Id);
         }
-        
+
         await _utilityBillPeriodRepository.SaveChangesAsync(CancellationToken.None);
-        
+
         var utilityBills = new List<UtilityBill>
         {
             new UtilityBill
@@ -398,11 +398,11 @@ public class DataSeedingService : IDataSeedingService
                 UtilityBillPeriodId = billPeriod1Id
             }
         };
-        
+
         foreach (var utilityBill in utilityBills)
         {
             var existingUtilityBill = await _utilityBillRepository.GetByIdAsync(utilityBill.Id, CancellationToken.None);
-            
+
             if (existingUtilityBill != null)
             {
                 _logger.LogInformation("Utility bill with ID {Id} already exists, skipping.", utilityBill.Id);
@@ -410,12 +410,12 @@ public class DataSeedingService : IDataSeedingService
             }
 
             await _utilityBillRepository.AddAsync(utilityBill, CancellationToken.None);
-            
+
             _logger.LogInformation("Added utility bill with ID {Id}", utilityBill.Id);
         }
-        
+
         await _utilityBillRepository.SaveChangesAsync(CancellationToken.None);
-        
+
         _logger.LogInformation("Data seeding for Development completed");
     }
 }

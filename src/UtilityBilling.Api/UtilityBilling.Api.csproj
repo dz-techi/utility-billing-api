@@ -30,6 +30,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <Folder Include="Endpoints\UtilityTypes\" />
       <Folder Include="Mapping\" />
     </ItemGroup>
 
