@@ -1,7 +1,8 @@
 using UtilityBilling.Domain.Common;
+using UtilityBilling.Domain.Common.UtilityUnitType;
 using UtilityBilling.Domain.Models;
 
-namespace UtilityBilling.Application.Results.Property;
+namespace UtilityBilling.Contracts.Results.Property;
 
 public class PropertyItem
 {
@@ -24,7 +25,7 @@ public class PropertyItem
             PropertyType = property.PropertyType,
             Address = AddressResult.FromAddress(property.Address),
             Users = property.PropertyUsers
-                .Select(PropertyUserResult.FromPropertyUser)
+                .Select(PropertyUserResult.FromDto)
                 .ToList()
         };
     }
@@ -72,7 +73,7 @@ public class PropertyUserResult
 
     public string Email { get; set; } = null!;
     
-    public static PropertyUserResult FromPropertyUser(PropertyUser propertyUser)
+    public static PropertyUserResult FromDto(PropertyUser propertyUser)
     {
         return new PropertyUserResult
         {

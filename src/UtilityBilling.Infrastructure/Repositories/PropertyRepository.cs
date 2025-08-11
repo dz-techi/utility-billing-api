@@ -11,12 +11,21 @@ public class PropertyRepository : BaseRepository<Property>, IPropertyRepository
     {
     }
 
+    public new async Task<Property?> GetByIdAsync(Guid id, CancellationToken cancellationToken)
+    {
+        return await _context.Properties
+            .Where(p => p.Id == id)
+            .Include(p => p.UtilityTypes)
+            .SingleOrDefaultAsync(cancellationToken);
+    }
+
     public async Task<List<Property>> GetAllByUserIdAsync(Guid userId, CancellationToken cancellationToken)
     {
         return await _context.Properties
             .AsNoTracking()
             .Where(p => p.OwnerId == userId)
             .Include(p => p.Address)
+            .Include(p => p.UtilityTypes)
             .Include(p => p.PropertyUsers)
             .ThenInclude(pu => pu.User)
             .OrderBy(p => p.Name)

@@ -1,4 +1,3 @@
-using System.ComponentModel.DataAnnotations;
 using UtilityBilling.Domain.Common;
 using UtilityBilling.Domain.Common.UtilityUnitType;
 
@@ -7,11 +6,6 @@ namespace UtilityBilling.Domain.Models;
 public class PropertyUtilityType : BaseEntity
 {
     public Guid PropertyId { get; set; }
-
-    [MaxLength(500)]
-    public string Description { get; set; } = null!;
-
-    public bool Default { get; set; }
 
     public bool HasUnitMeasurement { get; set; }
 

@@ -1,5 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
-using UtilityBilling.Application.Results.Property;
+using UtilityBilling.Contracts.Results.Property;
 using UtilityBilling.Infrastructure.Repositories.Interfaces;
 
 namespace UtilityBilling.Api.Endpoints.Properties;

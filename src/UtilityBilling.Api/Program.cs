@@ -1,4 +1,3 @@
-using System.Reflection;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Asp.Versioning;
@@ -134,18 +133,5 @@ app.UseAuthorization();
 app.UseExceptionHandler(_ => { });
 
 app.UseHttpsRedirection();
-
-// Map endpoints using Vertical Slice Architecture
-// app.MapGetProductEndpoint();
-// app.MapAddProductEndpoint();
-//
-// app.MapGetUtilityBillPeriodsEndpoint();
-// app.MapAddUtilityBillPeriodEndpoint();
-// app.MapGetUtilityBillPeriodByIdEndpoint();
-// app.MapRemoveUtilityBillPeriodEndpoint();
-// app.MapAddUtilityBillEndpoint();
-// app.MapUpdateUtilityBillEndpoint();
-// app.MapRemoveUtilityBillEndpoint();
-// app.MapGetPropertiesForSelectEndpoint();
 
 app.Run();

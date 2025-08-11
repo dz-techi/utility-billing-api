@@ -11,8 +11,9 @@ public static class DependencyInjection
     public static IServiceCollection AddApplication(this IServiceCollection services)
     {
         services.AddMapster();
-        
+
         services.AddScoped<IDataSeedingService, DataSeedingService>();
+        services.AddScoped<IUtilityTypeMappingService, UtilityTypeMappingService>();
 
         // Automatically scan for all mapping configurations. 
         TypeAdapterConfig.GlobalSettings.Scan(typeof(DependencyInjection).Assembly);

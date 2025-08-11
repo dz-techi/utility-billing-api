@@ -13,7 +13,6 @@ public class DataSeedingService : IDataSeedingService
     private readonly IUtilityBillPeriodRepository _utilityBillPeriodRepository;
     private readonly IUtilityBillRepository _utilityBillRepository;
     private readonly IPropertyRepository _propertyRepository;
-    private readonly IUtilityTypeRepository _utilityTypeRepository;
     private readonly IUserRepository _userRepository;
 
     public DataSeedingService(
@@ -21,14 +20,12 @@ public class DataSeedingService : IDataSeedingService
         IUtilityBillPeriodRepository utilityBillPeriodRepository,
         IUtilityBillRepository utilityBillRepository,
         IPropertyRepository propertyRepository,
-        IUtilityTypeRepository utilityTypeRepository,
         IUserRepository userRepository)
     {
         _logger = logger;
         _utilityBillPeriodRepository = utilityBillPeriodRepository;
         _utilityBillRepository = utilityBillRepository;
         _propertyRepository = propertyRepository;
-        _utilityTypeRepository = utilityTypeRepository;
         _userRepository = userRepository;
     }
 
@@ -125,6 +122,64 @@ public class DataSeedingService : IDataSeedingService
                         Role = UserRole.Admin,
                         PropertyId = property1Id
                     }
+                ],
+                UtilityTypes = [
+                    new PropertyUtilityType
+                    {
+                        Id = new Guid("d7c47590-ef00-4b6b-96a8-d82cf277e5ad"),
+                        HasUnitMeasurement = true,
+                        UnitMeasurementType = MeasurementUnitType.KilowattHours,
+                        PropertyId = property1Id,
+                        UtilityBillType = UtilityBillType.Electricity
+                    },
+                    new PropertyUtilityType
+                    {
+                        Id = new Guid("3f9c2714-05ee-41d1-b25c-04f3312ead47"),
+                        HasUnitMeasurement = true,
+                        UnitMeasurementType = MeasurementUnitType.CubicMeters,
+                        PropertyId = property1Id,
+                        UtilityBillType = UtilityBillType.Water
+                    },
+                    new PropertyUtilityType
+                    {
+                        Id = new Guid("042e4a44-f0ea-4c1d-8caf-12d67ffc73b7"),
+                        HasUnitMeasurement = true,
+                        UnitMeasurementType = MeasurementUnitType.CubicMeters,
+                        PropertyId = property1Id,
+                        UtilityBillType = UtilityBillType.Gas
+                    },
+                    new PropertyUtilityType
+                    {
+                        Id = new Guid("c09b02c5-d706-40a0-b734-ab8313715d32"),
+                        HasUnitMeasurement = true,
+                        UnitMeasurementType = MeasurementUnitType.KilowattHours,
+                        PropertyId = property1Id,
+                        UtilityBillType = UtilityBillType.Heating
+                    },
+                    new PropertyUtilityType
+                    {
+                        Id = new Guid("f5ff2d6d-10e2-4792-8bec-799125ff80e7"),
+                        HasUnitMeasurement = false,
+                        UnitMeasurementType = MeasurementUnitType.None,
+                        PropertyId = property1Id,
+                        UtilityBillType = UtilityBillType.Maintenance
+                    },
+                    new PropertyUtilityType
+                    {
+                        Id = new Guid("6b279229-6f9f-4ad4-b860-b6d7ae4b177f"),
+                        HasUnitMeasurement = false,
+                        UnitMeasurementType = MeasurementUnitType.None,
+                        PropertyId = property1Id,
+                        UtilityBillType = UtilityBillType.Internet
+                    },
+                    new PropertyUtilityType
+                    {
+                        Id = new Guid("2aa082e4-ff34-4dd9-8eaf-c4b414890084"),
+                        HasUnitMeasurement = true,
+                        UnitMeasurementType = MeasurementUnitType.Liters,
+                        PropertyId = property1Id,
+                        UtilityBillType = UtilityBillType.DrinkingWater
+                    }
                 ]
             },
             new Property
@@ -147,6 +202,43 @@ public class DataSeedingService : IDataSeedingService
                         UserId = user3Id,
                         Role = UserRole.Viewer
                     }
+                ],
+                UtilityTypes = [
+                    new PropertyUtilityType
+                    {
+                        Id = new Guid("c1d2e3f4-5a6b-7c8d-9e0f-1a2b3c4d5e6f"),
+                        HasUnitMeasurement = true,
+                        UnitMeasurementType = MeasurementUnitType.KilowattHours,
+                        UtilityBillType = UtilityBillType.Electricity
+                    },
+                    new PropertyUtilityType
+                    {
+                        Id = new Guid("dcd9e715-c1cd-4ee4-b391-6e6260f51dfb"),
+                        HasUnitMeasurement = true,
+                        UnitMeasurementType = MeasurementUnitType.CubicMeters,
+                        UtilityBillType = UtilityBillType.Water
+                    },
+                    new PropertyUtilityType
+                    {
+                        Id = new Guid("c3cae69a-8787-4656-b033-7122f4d4e7ff"),
+                        HasUnitMeasurement = true,
+                        UnitMeasurementType = MeasurementUnitType.KilowattHours,
+                        UtilityBillType = UtilityBillType.Heating
+                    },
+                    new PropertyUtilityType
+                    {
+                        Id = new Guid("10d2ffd3-7f6a-4736-ad40-3a00dd15d592"),
+                        HasUnitMeasurement = false,
+                        UnitMeasurementType = MeasurementUnitType.None,
+                        UtilityBillType = UtilityBillType.Maintenance
+                    },
+                    new PropertyUtilityType
+                    {
+                        Id = new Guid("165b85a0-8afc-4c47-82a4-7870f2b4914c"),
+                        HasUnitMeasurement = false,
+                        UnitMeasurementType = MeasurementUnitType.None,
+                        UtilityBillType = UtilityBillType.RentalFee
+                    },
                 ]
             }
         };
@@ -167,135 +259,6 @@ public class DataSeedingService : IDataSeedingService
         }
 
         await _propertyRepository.SaveChangesAsync(CancellationToken.None);
-
-        var utilityTypes = new List<PropertyUtilityType>
-        {
-            new PropertyUtilityType
-            {
-                Id = new Guid("c1d2e3f4-5a6b-7c8d-9e0f-1a2b3c4d5e6f"),
-                HasUnitMeasurement = true,
-                Description = "Electricity bill for the property",
-                UnitMeasurementType = MeasurementUnitType.KilowattHours,
-                PropertyId = property2Id,
-                UtilityBillType = UtilityBillType.Electricity
-            },
-            new PropertyUtilityType
-            {
-                Id = new Guid("dcd9e715-c1cd-4ee4-b391-6e6260f51dfb"),
-                HasUnitMeasurement = true,
-                Description = "Water bill for the property",
-                UnitMeasurementType = MeasurementUnitType.CubicMeters,
-                PropertyId = property2Id,
-                UtilityBillType = UtilityBillType.Water
-            },
-            new PropertyUtilityType
-            {
-                Id = new Guid("c3cae69a-8787-4656-b033-7122f4d4e7ff"),
-                HasUnitMeasurement = true,
-                Description = "Gas bill for the property",
-                UnitMeasurementType = MeasurementUnitType.KilowattHours,
-                PropertyId = property2Id,
-                UtilityBillType = UtilityBillType.Heating
-            },
-            new PropertyUtilityType
-            {
-                Id = new Guid("10d2ffd3-7f6a-4736-ad40-3a00dd15d592"),
-                HasUnitMeasurement = false,
-                Description = "Maintenance fee for the property",
-                UnitMeasurementType = MeasurementUnitType.None,
-                PropertyId = property2Id,
-                UtilityBillType = UtilityBillType.Maintenance
-            },
-            new PropertyUtilityType
-            {
-                Id = new Guid("165b85a0-8afc-4c47-82a4-7870f2b4914c"),
-                HasUnitMeasurement = false,
-                Description = "Rental fee for the property",
-                UnitMeasurementType = MeasurementUnitType.None,
-                PropertyId = property2Id,
-                UtilityBillType = UtilityBillType.RentalFee
-            },
-            new PropertyUtilityType
-            {
-                Id = new Guid("d7c47590-ef00-4b6b-96a8-d82cf277e5ad"),
-                HasUnitMeasurement = true,
-                Description = "Electricity bill for the property",
-                UnitMeasurementType = MeasurementUnitType.KilowattHours,
-                PropertyId = property1Id,
-                UtilityBillType = UtilityBillType.Electricity
-            },
-            new PropertyUtilityType
-            {
-                Id = new Guid("3f9c2714-05ee-41d1-b25c-04f3312ead47"),
-                HasUnitMeasurement = true,
-                Description = "Water bill for the property",
-                UnitMeasurementType = MeasurementUnitType.CubicMeters,
-                PropertyId = property1Id,
-                UtilityBillType = UtilityBillType.Water
-            },
-            new PropertyUtilityType
-            {
-                Id = new Guid("042e4a44-f0ea-4c1d-8caf-12d67ffc73b7"),
-                HasUnitMeasurement = true,
-                Description = "Gas bill for the property",
-                UnitMeasurementType = MeasurementUnitType.CubicMeters,
-                PropertyId = property1Id,
-                UtilityBillType = UtilityBillType.Gas
-            },
-            new PropertyUtilityType
-            {
-                Id = new Guid("c09b02c5-d706-40a0-b734-ab8313715d32"),
-                HasUnitMeasurement = true,
-                Description = "Heating bill for the property",
-                UnitMeasurementType = MeasurementUnitType.KilowattHours,
-                PropertyId = property1Id,
-                UtilityBillType = UtilityBillType.Heating
-            },
-            new PropertyUtilityType
-            {
-                Id = new Guid("f5ff2d6d-10e2-4792-8bec-799125ff80e7"),
-                HasUnitMeasurement = false,
-                Description = "Maintenance fee for the property",
-                UnitMeasurementType = MeasurementUnitType.None,
-                PropertyId = property1Id,
-                UtilityBillType = UtilityBillType.Maintenance
-            },
-            new PropertyUtilityType
-            {
-                Id = new Guid("6b279229-6f9f-4ad4-b860-b6d7ae4b177f"),
-                HasUnitMeasurement = false,
-                Description = "Internet bill for the property",
-                UnitMeasurementType = MeasurementUnitType.None,
-                PropertyId = property1Id,
-                UtilityBillType = UtilityBillType.Internet
-            },
-            new PropertyUtilityType
-            {
-                Id = new Guid("2aa082e4-ff34-4dd9-8eaf-c4b414890084"),
-                HasUnitMeasurement = true,
-                Description = "Drinking water bill for the property",
-                UnitMeasurementType = MeasurementUnitType.Liters,
-                PropertyId = property1Id,
-                UtilityBillType = UtilityBillType.DrinkingWater
-            }
-        };
-
-        foreach (var utility in utilityTypes)
-        {
-            var existingUtility = await _utilityTypeRepository.GetByIdAsync(utility.Id, CancellationToken.None);
-
-            if (existingUtility != null)
-            {
-                _logger.LogInformation("Utility type with ID {Id} already exists, skipping.", utility.Id);
-                continue;
-            }
-
-            await _utilityTypeRepository.AddAsync(utility, CancellationToken.None);
-
-            _logger.LogInformation("Added utility type with ID {Id}", utility.Id);
-        }
-
-        await _utilityTypeRepository.SaveChangesAsync(CancellationToken.None);
 
         var utilityBillPeriods = new List<UtilityBillPeriod>
         {
