@@ -38,6 +38,7 @@ public class AddUtilityBillEndpoint : IEndpoint
             UtilityBillType = request.UtilityBillType,
             Usage = request.Usage,
             Cost = request.Cost,
+            Paid = request.Paid,
             MeasurementUnitType = utilityTypeMappingService.GetMeasurementUnitType(request.UtilityBillType),
         };
 

@@ -7,4 +7,6 @@ public interface IUtilityBillPeriodRepository : IBaseRepository<UtilityBillPerio
     Task<UtilityBillPeriod?> FindExistingBillPeriodWithinDatesAsync(Guid userId, DateTime startDate, DateTime endDate, CancellationToken cancellationToken);
     
     Task<IList<UtilityBillPeriod>> GetAllByUserIdAsync(Guid userId, CancellationToken cancellationToken);
+    
+    Task<IList<UtilityBillPeriod>> GetAllByPropertyIdAsync(Guid propertyId, CancellationToken cancellationToken);
 }

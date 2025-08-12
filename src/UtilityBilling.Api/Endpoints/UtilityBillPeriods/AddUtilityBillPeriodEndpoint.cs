@@ -33,14 +33,14 @@ public class AddUtilityBillPeriodEndpoint : IEndpoint
             throw new EntityAlreadyExistsException($"Billing period between dates: {request.StartDate} - {request.EndDate} already exists");
         }
 
-        var utilityBillPeriodDto = new Domain.Models.UtilityBillPeriod(userId, request.Name, request.StartDate, request.EndDate);
+        var utilityBillPeriodDto = new Domain.Models.UtilityBillPeriod(userId, request.PropertyId, request.Name, request.StartDate, request.EndDate);
 
         await utilityBillPeriodRepository.AddAsync(utilityBillPeriodDto, cancellationToken);
 
         await utilityBillPeriodRepository.SaveChangesAsync(cancellationToken);
 
         var result = GetUtilityBillPeriodResult.FromDto(utilityBillPeriodDto);
-        
+
         return Results.Ok(result);
     }
 }

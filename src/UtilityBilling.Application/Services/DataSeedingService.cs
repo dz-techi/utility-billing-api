@@ -194,13 +194,15 @@ public class DataSeedingService : IDataSeedingService
                     {
                         AssignedDate = DateTime.UtcNow.AddDays(-20),
                         UserId = user1Id,
-                        Role = UserRole.Owner
+                        Role = UserRole.Owner,
+                        PropertyId = property2Id
                     },
                     new PropertyUser
                     {
                         AssignedDate = DateTime.UtcNow.AddDays(-10),
                         UserId = user3Id,
-                        Role = UserRole.Viewer
+                        Role = UserRole.Viewer,
+                        PropertyId = property2Id
                     }
                 ],
                 UtilityTypes = [
@@ -209,6 +211,7 @@ public class DataSeedingService : IDataSeedingService
                         Id = new Guid("c1d2e3f4-5a6b-7c8d-9e0f-1a2b3c4d5e6f"),
                         HasUnitMeasurement = true,
                         UnitMeasurementType = MeasurementUnitType.KilowattHours,
+                        PropertyId = property2Id,
                         UtilityBillType = UtilityBillType.Electricity
                     },
                     new PropertyUtilityType
@@ -216,6 +219,7 @@ public class DataSeedingService : IDataSeedingService
                         Id = new Guid("dcd9e715-c1cd-4ee4-b391-6e6260f51dfb"),
                         HasUnitMeasurement = true,
                         UnitMeasurementType = MeasurementUnitType.CubicMeters,
+                        PropertyId = property2Id,
                         UtilityBillType = UtilityBillType.Water
                     },
                     new PropertyUtilityType
@@ -223,6 +227,7 @@ public class DataSeedingService : IDataSeedingService
                         Id = new Guid("c3cae69a-8787-4656-b033-7122f4d4e7ff"),
                         HasUnitMeasurement = true,
                         UnitMeasurementType = MeasurementUnitType.KilowattHours,
+                        PropertyId = property2Id,
                         UtilityBillType = UtilityBillType.Heating
                     },
                     new PropertyUtilityType
@@ -230,6 +235,7 @@ public class DataSeedingService : IDataSeedingService
                         Id = new Guid("10d2ffd3-7f6a-4736-ad40-3a00dd15d592"),
                         HasUnitMeasurement = false,
                         UnitMeasurementType = MeasurementUnitType.None,
+                        PropertyId = property2Id,
                         UtilityBillType = UtilityBillType.Maintenance
                     },
                     new PropertyUtilityType
@@ -237,6 +243,7 @@ public class DataSeedingService : IDataSeedingService
                         Id = new Guid("165b85a0-8afc-4c47-82a4-7870f2b4914c"),
                         HasUnitMeasurement = false,
                         UnitMeasurementType = MeasurementUnitType.None,
+                        PropertyId = property2Id,
                         UtilityBillType = UtilityBillType.RentalFee
                     },
                 ]

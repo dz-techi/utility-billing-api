@@ -6,6 +6,8 @@ namespace UtilityBilling.Domain.Models;
 public class UtilityBill : BaseEntity
 {
     public UtilityBillType UtilityBillType { get; set; }
+    
+    public bool Paid { get; set; }
 
     public decimal Usage { get; set; }
 

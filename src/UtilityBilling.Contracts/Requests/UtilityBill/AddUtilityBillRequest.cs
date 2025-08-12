@@ -4,6 +4,8 @@ namespace UtilityBilling.Contracts.Requests.UtilityBill;
 
 public class AddUtilityBillRequest
 {
+    public bool Paid { get; set; }
+    
     public UtilityBillType UtilityBillType { get; set; }
 
     public decimal Usage { get; set; }

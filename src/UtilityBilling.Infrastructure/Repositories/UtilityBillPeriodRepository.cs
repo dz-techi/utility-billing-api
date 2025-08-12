@@ -33,4 +33,15 @@ public class UtilityBillPeriodRepository : BaseRepository<UtilityBillPeriod>, IU
             .Include(u => u.UtilityBills)
             .ToListAsync(cancellationToken);
     }
+
+    public async Task<IList<UtilityBillPeriod>> GetAllByPropertyIdAsync(
+        Guid propertyId,
+        CancellationToken cancellationToken)
+    {
+        return await _context.UtilityBillPeriods.AsNoTracking()
+            .Where(u => u.PropertyId == propertyId)
+            .OrderByDescending(u => u.StartDate)
+            .Include(u => u.UtilityBills)
+            .ToListAsync(cancellationToken);
+    }
 }

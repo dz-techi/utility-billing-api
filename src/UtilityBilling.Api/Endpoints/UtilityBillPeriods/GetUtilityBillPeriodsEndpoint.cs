@@ -9,13 +9,13 @@ public class GetUtilityBillPeriodsEndpoint : IEndpoint
 {
     public void MapEndpoint(IEndpointRouteBuilder builder)
     {
-        builder.MapGet("utility-bill-periods", HandleGetUtilityBillPeriods)
+        builder.MapGet("/properties/{propertyId:guid}/billing-periods", HandleGetUtilityBillPeriods)
             .WithName("GetUtilityBillPeriods")
             .WithOpenApi();
     }
 
     private static async Task<IResult> HandleGetUtilityBillPeriods(
-        [FromServices] IMapper mapper,
+        Guid propertyId,
         [FromServices] IUtilityBillPeriodRepository utilityBillPeriodRepository,
         [FromServices] ILogger<object> logger,
         CancellationToken cancellationToken)
@@ -23,20 +23,21 @@ public class GetUtilityBillPeriodsEndpoint : IEndpoint
         // Hardcoded user id.
         var userId = new Guid("99d5d2cf-93e1-4300-ac09-39849738d744");
         logger.LogInformation("User ID: {UserId}", userId);
+        logger.LogInformation("Property ID: {PropertyId}", propertyId);
 
-        var utilityBillPeriods = await utilityBillPeriodRepository.GetAllByUserIdAsync(userId, cancellationToken);
+        var utilityBillPeriods = await utilityBillPeriodRepository.GetAllByPropertyIdAsync(propertyId, cancellationToken);
         logger.LogInformation("Retrieved {Count} utility bill periods", utilityBillPeriods.Count);
 
         if (utilityBillPeriods.Count == 0)
         {
-            logger.LogInformation("No content returned");
-            return Results.NoContent();
+            logger.LogInformation("No utility bill periods found, returning empty array");
+            return Results.Ok(new List<GetUtilityBillPeriodResult>());
         }
-        
+
         var result = utilityBillPeriods
             .Select(GetUtilityBillPeriodResult.FromDto)
             .ToList();
-        
+
         logger.LogInformation("Returning {Count} results", result.Count);
         return Results.Ok(result);
     }

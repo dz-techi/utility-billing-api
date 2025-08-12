@@ -14,9 +14,10 @@ using UtilityBilling.Infrastructure.Database;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Configure JSON serialization to use string enums
+// Configure JSON serialization to use camelCase and string enums
 builder.Services.ConfigureHttpJsonOptions(options =>
 {
+    options.SerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
     options.SerializerOptions.Converters.Add(new JsonStringEnumConverter(JsonNamingPolicy.CamelCase));
 });
 
@@ -84,7 +85,7 @@ using (var scope = app.Services.CreateScope())
     var context = services.GetRequiredService<AppDbContext>();
     var logger = services.GetRequiredService<ILogger<Program>>();
     var dataSeedingService = services.GetRequiredService<IDataSeedingService>();
-    
+
     try
     {
         logger.LogInformation("Starting database migration...");

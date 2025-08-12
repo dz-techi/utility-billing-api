@@ -11,10 +11,4 @@
       <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.3" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="Property\" />
-      <Folder Include="UtilityBillPeriod\" />
-      <Folder Include="UtilityType\" />
-    </ItemGroup>
-
 </Project>
