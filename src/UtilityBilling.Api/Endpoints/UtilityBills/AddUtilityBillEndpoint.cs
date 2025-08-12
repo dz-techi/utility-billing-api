@@ -11,7 +11,7 @@ public class AddUtilityBillEndpoint : IEndpoint
 {
     public void MapEndpoint(IEndpointRouteBuilder builder)
     {
-        builder.MapPost("/utility-bills", HandleAddUtilityBill)
+        builder.MapPost("/utility-bill-periods/{utilityBillPeriodId:guid}/bills", HandleAddUtilityBill)
             .WithName("AddUtilityBill")
             .WithOpenApi()
             .Produces<AddUtilityBillResult>(StatusCodes.Status200OK)
@@ -21,6 +21,7 @@ public class AddUtilityBillEndpoint : IEndpoint
     }
     
     private static async Task<IResult> HandleAddUtilityBill(
+        Guid utilityBillPeriodId,
         [FromBody] AddUtilityBillRequest request,
         [FromServices] IUtilityBillRepository utilityBillRepository,
         [FromServices] IUtilityTypeMappingService utilityTypeMappingService,
@@ -33,6 +34,7 @@ public class AddUtilityBillEndpoint : IEndpoint
 
         var utilityBill = new UtilityBill
         {
+            UtilityBillPeriodId = utilityBillPeriodId,
             UtilityBillType = request.UtilityBillType,
             Usage = request.Usage,
             Cost = request.Cost,
