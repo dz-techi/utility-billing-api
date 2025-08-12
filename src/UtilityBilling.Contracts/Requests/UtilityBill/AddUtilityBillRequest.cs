@@ -1,6 +1,6 @@
 using UtilityBilling.Domain.Common.UtilityUnitType;
 
-namespace UtilityBilling.Contracts.Requests.UtilityBillPeriod;
+namespace UtilityBilling.Contracts.Requests.UtilityBill;
 
 public class AddUtilityBillRequest
 {
@@ -9,7 +9,4 @@ public class AddUtilityBillRequest
     public decimal Usage { get; set; }
     
     public decimal Cost { get; set; }
-
-    // Could be resolved by utility bill type
-    public MeasurementUnitType MeasurementUnitType { get; set; }
 }
