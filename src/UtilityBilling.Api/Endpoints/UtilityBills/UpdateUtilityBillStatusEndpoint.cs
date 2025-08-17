@@ -36,7 +36,6 @@ public class UpdateUtilityBillStatusEndpoint : IEndpoint
 
         utilityBill.Paid = request.Paid;
 
-        await utilityBillRepository.UpdateAsync(utilityBill, cancellationToken);
         await utilityBillRepository.SaveChangesAsync(cancellationToken);
 
         return Results.Ok();

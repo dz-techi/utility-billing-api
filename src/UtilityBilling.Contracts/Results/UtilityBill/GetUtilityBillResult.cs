@@ -30,8 +30,6 @@ public class GetUtilityBillResult
             Usage = utilityBill.Usage,
             Cost = utilityBill.Cost,
             Paid = utilityBill.Paid,
-            CreatedAt = utilityBill.CreatedAt,
-            UpdatedAt = utilityBill.UpdatedAt
         };
     }
 }
