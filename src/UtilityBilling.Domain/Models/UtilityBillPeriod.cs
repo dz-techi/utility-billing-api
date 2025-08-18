@@ -24,13 +24,14 @@ public class UtilityBillPeriod : BaseEntity
 
     public UtilityBillPeriod() { }
 
-    public UtilityBillPeriod(Guid userId, Guid propertyId, string name, DateTime startDate, DateTime endDate)
+    public UtilityBillPeriod(Guid userId, Guid propertyId, string name, DateTime startDate, DateTime endDate, BillPeriodStatus status)
     {
         UserId = userId;
         PropertyId = propertyId;
         Name = name;
         StartDate = startDate;
         EndDate = endDate;
+        Status = status;
     }
 
     public void AddUtilityBill(UtilityBillType utilityBillType, decimal usage, decimal cost, MeasurementUnitType measurementUnitType)

@@ -4,5 +4,6 @@ public enum BillPeriodStatus
 {
     Active,
     Upcoming,
-    Closed
+    Closed,
+    Overdue
 }

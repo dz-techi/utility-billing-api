@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using UtilityBilling.Domain.Common;
 using UtilityBilling.Domain.Models;
 using UtilityBilling.Infrastructure.Database;
 using UtilityBilling.Infrastructure.Repositories.Interfaces;
@@ -42,6 +43,13 @@ public class UtilityBillPeriodRepository : BaseRepository<UtilityBillPeriod>, IU
             .Where(u => u.PropertyId == propertyId)
             .OrderByDescending(u => u.StartDate)
             .Include(u => u.UtilityBills)
+            .ToListAsync(cancellationToken);
+    }
+
+    public async Task<IList<UtilityBillPeriod>> GetPeriodsByStatusAsync(BillPeriodStatus status, CancellationToken cancellationToken)
+    {
+        return await _context.UtilityBillPeriods
+            .Where(p => p.Status == status)
             .ToListAsync(cancellationToken);
     }
 }

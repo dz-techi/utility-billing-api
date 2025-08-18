@@ -2,6 +2,7 @@ using MapsterMapper;
 using Microsoft.AspNetCore.Mvc;
 using UtilityBilling.Contracts.Requests.UtilityBillPeriod;
 using UtilityBilling.Contracts.Results.UtilityBillPeriod;
+using UtilityBilling.Domain.Common;
 using UtilityBilling.Domain.Exceptions;
 using UtilityBilling.Infrastructure.Repositories.Interfaces;
 
@@ -33,7 +34,16 @@ public class AddUtilityBillPeriodEndpoint : IEndpoint
             throw new EntityAlreadyExistsException($"Billing period between dates: {request.StartDate} - {request.EndDate} already exists");
         }
 
-        var utilityBillPeriodDto = new Domain.Models.UtilityBillPeriod(userId, request.PropertyId, request.Name, request.StartDate, request.EndDate);
+        // TODO: Move to separate method or service.
+        var currentDate = DateTime.UtcNow.Date;
+        
+        var status = currentDate >= request.StartDate && currentDate <= request.EndDate
+            ? BillPeriodStatus.Active
+            : currentDate <= request.EndDate
+                ? BillPeriodStatus.Upcoming
+                : BillPeriodStatus.Overdue;
+
+        var utilityBillPeriodDto = new Domain.Models.UtilityBillPeriod(userId, request.PropertyId, request.Name, request.StartDate, request.EndDate, status);
 
         await utilityBillPeriodRepository.AddAsync(utilityBillPeriodDto, cancellationToken);
 

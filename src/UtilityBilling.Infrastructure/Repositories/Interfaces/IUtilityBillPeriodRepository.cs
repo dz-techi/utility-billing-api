@@ -1,3 +1,4 @@
+using UtilityBilling.Domain.Common;
 using UtilityBilling.Domain.Models;
 
 namespace UtilityBilling.Infrastructure.Repositories.Interfaces;
@@ -9,4 +10,6 @@ public interface IUtilityBillPeriodRepository : IBaseRepository<UtilityBillPerio
     Task<IList<UtilityBillPeriod>> GetAllByUserIdAsync(Guid userId, CancellationToken cancellationToken);
     
     Task<IList<UtilityBillPeriod>> GetAllByPropertyIdAsync(Guid propertyId, CancellationToken cancellationToken);
+    
+    Task<IList<UtilityBillPeriod>> GetPeriodsByStatusAsync(BillPeriodStatus status, CancellationToken cancellationToken);
 }
