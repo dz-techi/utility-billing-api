@@ -32,6 +32,8 @@ public class AddUtilityBillEndpoint : IEndpoint
             return Results.BadRequest("Request body cannot be null.");
         }
 
+        var currentDatetime = DateTime.UtcNow;
+        
         var utilityBill = new UtilityBill
         {
             UtilityBillPeriodId = utilityBillPeriodId,
@@ -40,7 +42,14 @@ public class AddUtilityBillEndpoint : IEndpoint
             Cost = request.Cost,
             Paid = request.Paid,
             MeasurementUnitType = utilityTypeMappingService.GetMeasurementUnitType(request.UtilityBillType),
+            CreatedDate = currentDatetime,
+            ModifiedDate = currentDatetime
         };
+
+        if (request.Paid)
+        {
+            utilityBill.PaymentDate = currentDatetime;
+        }
 
         await utilityBillRepository.AddAsync(utilityBill, cancellationToken);
         

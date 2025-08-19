@@ -12,7 +12,13 @@ public class UtilityBill : BaseEntity
     public decimal Usage { get; set; }
 
     public decimal Cost { get; set; }
+    
+    public DateTime CreatedDate { get; set; }
+    
+    public DateTime ModifiedDate { get; set; }
 
+    public DateTime? PaymentDate { get; set; }
+    
     public MeasurementUnitType MeasurementUnitType { get; set; }
     
     public Guid UtilityBillPeriodId { get; set; }
@@ -25,15 +31,20 @@ public class UtilityBill : BaseEntity
     
     public UtilityBill(UtilityBillType utilityBillType, decimal usage, decimal cost, MeasurementUnitType measurementUnitType)
     {
+        var creationTime = DateTime.UtcNow;
+        
         UtilityBillType = utilityBillType;
         Usage = usage;
         Cost = cost;
         MeasurementUnitType = measurementUnitType;
+        CreatedDate = creationTime;
+        ModifiedDate = creationTime;
     }
     
     public void Update(decimal usage, decimal cost)
     {
         Usage = usage;
         Cost = cost;
+        ModifiedDate = DateTime.UtcNow;
     }
 }
