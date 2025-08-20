@@ -1,7 +1,6 @@
 using MapsterMapper;
 using Microsoft.AspNetCore.Mvc;
 using UtilityBilling.Contracts.Requests.UtilityBillPeriod;
-using UtilityBilling.Contracts.Results.UtilityBillPeriod;
 using UtilityBilling.Domain.Exceptions;
 using UtilityBilling.Infrastructure.Repositories.Interfaces;
 
@@ -21,17 +20,10 @@ public class UpdateUtilityBillEndpoint : IEndpoint
         Guid utilityBillId,
         [FromBody] UpdateUtilityBillRequest request,
         [FromServices] IMapper mapper,
-        [FromServices] IUtilityBillPeriodRepository utilityBillPeriodRepository,
+        [FromServices] IUtilityBillRepository utilityBillRepository,
         CancellationToken cancellationToken)
     {
-        var utilityBillPeriod = await utilityBillPeriodRepository.GetByIdAsync(id, cancellationToken);
-
-        if (utilityBillPeriod == null)
-        {
-            throw new EntityNotFoundException($"Utility bill period with id: {id} not found");
-        }
-
-        var utilityBill = utilityBillPeriod.FindBillById(utilityBillId);
+        var utilityBill = await utilityBillRepository.GetByIdAsync(utilityBillId, cancellationToken);
 
         if (utilityBill == null)
         {
@@ -40,11 +32,8 @@ public class UpdateUtilityBillEndpoint : IEndpoint
 
         utilityBill.Update(request.Usage, request.Cost);
 
-        utilityBillPeriodRepository.Update(utilityBillPeriod);
-        await utilityBillPeriodRepository.SaveChangesAsync(cancellationToken);
+        await utilityBillRepository.SaveChangesAsync(cancellationToken);
 
-        var result = GetUtilityBillPeriodResult.FromDto(utilityBillPeriod);
-        
-        return Results.Ok(result);
+        return Results.Ok();
     }
 }
